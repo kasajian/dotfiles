@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ~/p is installed from here:
+#   https://kasajian.visualstudio.com/DefaultCollection/_git/p
+
 chmod +x ~/dotfiles/makesymlinks.sh
 ~/dotfiles/makesymlinks.sh
 
