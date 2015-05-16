@@ -1,0 +1,110 @@
+" vundle stuff"
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" Syntastic is a syntax
+Plugin 'scrooloose/syntastic'
+
+" very nice file browser
+Plugin 'scrooloose/nerdtree'
+
+" jump around documents
+Plugin 'Lokaltog/vim-easymotion'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" filetype on
+" filetype indent on
+
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+
+let skip_loading_mswin=1
+
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set autoindent
+set expandtab
+set smarttab
+set smartcase
+set nobackup
+set ai
+" set cul
+set showmatch
+set vb
+set novisualbell
+set visualbell t_vb=
+set ruler
+set laststatus=2
+set backspace=indent,eol,start
+set background=dark
+set showmode
+set history=50
+let c_comment_strings=1
+set hlsearch
+set nohlsearch
+set scrolloff=3
+set showcmd
+set number
+set incsearch
+set ignorecase
+
+" Show EOL type and last modified timestamp, right after the filename
+set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
+" another one -> set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
+
+set lines=25 columns=80
+
+syntax on
+
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 14
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h16
+  elseif has("gui_win32")
+    set guifont=Consolas:h14:cANSI
+  endif
+endif
+
+colorscheme desert
