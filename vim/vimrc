@@ -107,4 +107,7 @@ if has("gui_running")
   endif
 endif
 
+" formats the entire contens as json
+" :%!python -m json.tool
+
 colorscheme desert

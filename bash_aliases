@@ -5,6 +5,8 @@ alias cp='cp -ir'
 alias mv='mv -i'
 alias ls='ls -G'
 
+alias gvim='mvim'
+
 alias ..='cd ..'
 alias ...='...'
 
