@@ -1,4 +1,3 @@
-" vundle stuff"
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -7,12 +6,11 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
-" Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 call vundle#end()            " required
-filetype indent on    " required
-filetype plugin on    " required
+filetype plugin indent on    " required!
 
 let skip_loading_mswin=1
 
@@ -33,7 +31,6 @@ set visualbell t_vb=
 set ruler
 set laststatus=2
 set backspace=indent,eol,start
-set background=dark
 set showmode
 set history=50
 let c_comment_strings=1
@@ -51,9 +48,7 @@ set noswapfile
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})\ %{fugitive#statusline()}%=%l,%c%V\ %P
 " another one -> set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
 
-set lines=25 columns=80
-
-syntax on
+" set lines=25 columns=80
 
 if has("gui_running")
   if has("gui_gtk2")
@@ -65,13 +60,22 @@ if has("gui_running")
   endif
 endif
 
+syntax on
+let g:solarized_termcolors=256
+colorscheme solarized
+" set background=dark
+" colorscheme desert
+
+map <F5> :NERDTreeToggle<CR>
+nnoremap <C-J> i<CR><Esc>
+
+imap <C-L> <ESC>
+imap ¬ <ESC>
+
+nmap <c-s> :w<cr>
+imap <c-s> <esc>:w<cr>a
+
+
 " formats the entire contens as json
 " :%!python -m json.tool
 
-colorscheme desert
-
-map <F5>    :NERDTreeToggle<CR>
-
-" imap <leader><leader> <ESC>
-" nmap <leader><leader> <ESC>
-" vmap <leader><leader> <ESC>
