@@ -6,6 +6,8 @@ alias mv='mv -i'
 alias ls='ls -G'
 
 alias gvim='mvim'
+alias mvimdiff='mvim -d'
+alias gvimdiff='mvim -d'
 
 alias ..='cd ..'
 alias ...='...'
