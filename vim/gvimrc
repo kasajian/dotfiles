@@ -1,4 +1,5 @@
 set co=86
+set lines=27
 
 if &diff
     if has('win32')
@@ -80,7 +81,4 @@ else
       autocmd VimEnter * if g:screen_size_restore_pos == 1 | call ScreenRestore() | endif
       autocmd VimLeavePre * if g:screen_size_restore_pos == 1 | call ScreenSave() | endif
     endif
-
-
-
 endif
