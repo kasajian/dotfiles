@@ -5,6 +5,7 @@ OS X:
     cd dotfiles
 
 Windows:
+
     Make sure you have vim, git and curl installed.  Try:
 
         vim --version
