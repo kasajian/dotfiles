@@ -65,7 +65,6 @@ syntax on
 if has("gui_running")
   set background=light
   colorscheme solarized
-  let g:solarized_termcolors=256
  
   if has("gui_gtk2")
     set guifont=Inconsolata\ 14
@@ -75,13 +74,10 @@ if has("gui_running")
     set guifont=Consolas:h14:cANSI
   endif
 else
-  if has("gui_gtk2")
-    set background=light
-    colorscheme solarized
-  elseif has("gui_macvim")
-    set background=light
-    colorscheme solarized
-  elseif has("gui_win32")
+  if has("unix")
+    let g:solarized_termcolors=256
+    set background=dark
+    colorscheme github
   endif
 endif
 
