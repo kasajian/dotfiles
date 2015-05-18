@@ -15,7 +15,7 @@ rem We want vim to pick up the one in vimfiles because it's recommended
 rem and vundles seems to require it.
 set vimfiles=%home%\vimfiles
 set other_vimrc=%home%\_vimrc
-if exist %other_vimrc% goto You cannot have file %other_vimrc% because the version in %vimfiles% will be ignored & goto :eof
+if exist %other_vimrc% echo Please move file %other_vimrc% so Vim can find vimrc in %vimfiles% & goto :eof
 
 rem if there's no vimfiles folder already, awesome
 if not exist %vimfiles%\nul goto :novimfiles
@@ -25,7 +25,7 @@ for %%i in (%vimfiles%) do set attribs=%%~ai
 set attrib9=%attribs:~8,1%
 if %attrib9% equ l rmdir %vimfiles% & goto novimfiles
 
-echo A non-link %vimfiles% folder exists.  Cannot make link. & goto :eof
+echo Please move %vimfiles% folder.  Cannot make a link folder if real one exists.  & goto :eof
 
 :novimfiles
 rem get path of this bat file, with trailing backslash so we can constrcut
