@@ -1,12 +1,10 @@
 @echo off
-setlocal
 
 rem make a link to the vim sub-folder located in the same folder as this batch
 rem file to the $home/vimfiles folder
 
 rem infer vim's $home variable, looks something like this: c:\home
-set h=%home%
-if %h%.==. set h=%homedrive%%homepath%
+if %home%.==. set home=%userprofile%
 
 rem vim searches for the vimrc file in this order:
 rem   $home/_vimrc
@@ -15,8 +13,8 @@ rem   $vim/_vimrc
 
 rem We want vim to pick up the one in vimfiles because it's recommended
 rem and vundles seems to require it.
-set vimfiles=%h%\vimfiles
-set other_vimrc=%h%\_vimrc
+set vimfiles=%home%\vimfiles
+set other_vimrc=%home%\_vimrc
 if exist %other_vimrc% goto You cannot have file %other_vimrc% because the version in %vimfiles% will be ignored & goto :eof
 
 rem if there's no vimfiles folder already, awesome
