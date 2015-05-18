@@ -7,7 +7,6 @@ OS X:
 Windows:
 
     Make sure you have vim, git and curl installed.  Try:
-
         vim --version
         curl --version
         git --version
