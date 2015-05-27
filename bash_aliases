@@ -10,9 +10,9 @@ else # OS X `ls`
 fi
 alias ls='ls ${colorflag}'
 
-alias gvim='mvim'
-alias mvimdiff='mvim -d'
-alias gvimdiff='mvim -d'
+#alias gvim='mvim'
+#alias mvimdiff='mvim -d'
+#alias gvimdiff='mvim -d'
 
 alias ..='cd ..'
 alias ...='...'

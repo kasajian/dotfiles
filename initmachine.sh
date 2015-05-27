@@ -7,7 +7,7 @@ os=$(uname)
 echo $os
 
 if [[ $os == 'Darwin' ]]; then
-
+sudo ln -s /usr/local/bin/mvim /usr/local/bin/gvim
 elif [[ $platform == 'Linux' ]]; then
 
 fi
