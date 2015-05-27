@@ -81,8 +81,38 @@ endif
 map <F5> :NERDTreeToggle<CR>
 nnoremap <C-J> i<CR><Esc>
 
+" Ctrl-L and Alt-L get out of insert mode.
 imap <C-L> <ESC>
 imap ¬ <ESC>
+
+" also mashing the keyboard
+" get out of insert mode by mashing the keyboard
+imap j;kl <esc>
+imap j;lk <esc>
+imap jk;l <esc>
+imap jkl; <esc>
+imap jl;k <esc>
+imap jlk; <esc>
+imap kjl; <esc>
+imap kj;l <esc>
+imap kl;j <esc>
+imap klj; <esc>
+imap k;lj <esc>
+imap k;jl <esc>
+imap ;lkj <esc>
+imap ;ljk <esc>
+imap ;klj <esc>
+imap ;kjl <esc>
+imap ;jlk <esc>
+imap ;jkl <esc>
+imap l;jk <esc>
+imap l;kj <esc>
+imap lkj; <esc>
+imap ljk; <esc>
+imap lk;j <esc>
+imap lj;k <esc>
+" set timeoutlen=500
+
 
 nmap <c-s> :w<cr>
 imap <c-s> <esc>:w<cr>a
