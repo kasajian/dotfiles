@@ -81,12 +81,13 @@ endif
 map <F5> :NERDTreeToggle<CR>
 nnoremap <C-J> i<CR><Esc>
 
-" Ctrl-L and Alt-L get out of insert mode.
+" Getting out insert mode, alternatives to <Esc> and Ctrl-[
+"   Ctrl-L and Alt-L get out of insert mode.
 imap <C-L> <ESC>
 imap ¬ <ESC>
 
-" also mashing the keyboard
-" get out of insert mode by mashing the keyboard
+"  also mashing the keyboard
+"  get out of insert mode by mashing the keyboard
 imap j;kl <esc>
 imap j;lk <esc>
 imap jk;l <esc>
@@ -113,10 +114,25 @@ imap lk;j <esc>
 imap lj;k <esc>
 " set timeoutlen=500
 
+" Ctrl+S to save
+nmap <C-S> :w<CR>
+imap <C-S> <C-O>:w<CR>
 
-nmap <c-s> :w<cr>
-imap <c-s> <esc>:w<cr>a
-
+" Some remappings to work with the external environment
+"   Ctrl+X, Ctrl+C in Visual mode for Cut/Copy external clipboard
+"   Ctrl+V in Insert only to Paste external clipboard
+"   Alt-Space = system menu
+" vnoremap <C-X> "+x
+" vnoremap <C-C> "+y
+vmap <C-X> "+x
+vmap <C-C> "+y
+imap <C-V> <C-O>"+gP
+cmap <C-V> <C-R>+
+if has("gui")
+  noremap <M-Space> :simalt ~<CR>
+  inoremap <M-Space> <C-O>:simalt ~<CR>
+  cnoremap <M-Space> <C-C>:simalt ~<CR>
+endif
 
 " formats the entire contens as json
 " :%!python -m json.tool
