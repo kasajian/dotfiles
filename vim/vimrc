@@ -139,6 +139,9 @@ if has("gui")
   cnoremap <M-Space> <C-C>:simalt ~<CR>
 endif
 
+map <Leader> <Plug>(easymotion-prefix)
+
+
 " formats the entire contens as json
 " :%!python -m json.tool
 
