@@ -93,30 +93,30 @@ imap ¬ <ESC>
 
 "  also mashing the keyboard
 "  get out of insert mode by mashing the keyboard
-imap j;kl <ESC>
-imap j;lk <ESC>
-imap jk;l <ESC>
-imap jkl; <ESC>
-imap jl;k <ESC>
-imap jlk; <ESC>
-imap kjl; <ESC>
-imap kj;l <ESC>
-imap kl;j <ESC>
-imap klj; <ESC>
-imap k;lj <ESC>
-imap k;jl <ESC>
+" imap j;kl <ESC>
+" imap j;lk <ESC>
+" imap jk;l <ESC>
+" imap jkl; <ESC>
+" imap jl;k <ESC>
+" imap jlk; <ESC>
+" imap kjl; <ESC>
+" imap kj;l <ESC>
+" imap kl;j <ESC>
+" imap klj; <ESC>
+" imap k;lj <ESC>
+" imap k;jl <ESC>
 imap ;lkj <ESC>
-imap ;ljk <ESC>
-imap ;klj <ESC>
-imap ;kjl <ESC>
-imap ;jlk <ESC>
-imap ;jkl <ESC>
-imap l;jk <ESC>
-imap l;kj <ESC>
-imap lkj; <ESC>
-imap ljk; <ESC>
-imap lk;j <ESC>
-imap lj;k <ESC>
+" imap ;ljk <ESC>
+" imap ;klj <ESC>
+" imap ;kjl <ESC>
+" imap ;jlk <ESC>
+" imap ;jkl <ESC>
+" imap l;jk <ESC>
+" imap l;kj <ESC>
+" imap lkj; <ESC>
+" imap ljk; <ESC>
+" imap lk;j <ESC>
+" imap lj;k <ESC>
 " set timeoutlen=500
 
 " Ctrl+S to save
