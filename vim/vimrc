@@ -19,9 +19,11 @@ Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
-Plugin 'wakatime/vim-wakatime'
 Plugin 'morhetz/gruvbox'
-Plugin 'airblade/vim-gitgutter'
+if has("unix")
+  Plugin 'wakatime/vim-wakatime'
+  Plugin 'airblade/vim-gitgutter'
+endif
 call vundle#end()            " required
 
 filetype plugin indent on    " required!
