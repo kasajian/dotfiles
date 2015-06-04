@@ -10,6 +10,8 @@ else # OS X `ls`
 fi
 alias ls='ls ${colorflag}'
 
+alias git-root=cd $(git rev-parse --show-toplevel)
+
 alias ..='cd ..'
 alias ...='...'
 
