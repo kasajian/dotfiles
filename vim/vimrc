@@ -119,9 +119,13 @@ imap ;lkj <ESC>
 " imap lj;k <ESC>
 " set timeoutlen=500
 
+imap ;; <ESC>
+
 " Ctrl+S to save
 nmap <C-S> :w<CR>
 imap <C-S> <C-O>:w<CR>
+
+nnoremap <leader>r :w<CR>:!%:p<CR>
 
 " Some remappings to work with the external environment
 "   Ctrl+X, Ctrl+C in Visual mode for Cut/Copy external clipboard
@@ -132,7 +136,7 @@ imap <C-S> <C-O>:w<CR>
 vmap <C-X> "+x
 vmap <C-C> "+y
 imap <C-V> <C-O>"+gP
-cmap <C-V> <C-R>+
+" cmap <C-V> <C-R>+
 if has("gui")
   noremap <M-Space> :simalt ~<CR>
   inoremap <M-Space> <C-O>:simalt ~<CR>
@@ -140,7 +144,6 @@ if has("gui")
 endif
 
 map <Leader> <Plug>(easymotion-prefix)
-
 
 " formats the entire contens as json
 " :%!python -m json.tool
