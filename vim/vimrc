@@ -21,7 +21,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'morhetz/gruvbox'
 if has("unix")
-  Plugin 'wakatime/vim-wakatime'
   Plugin 'airblade/vim-gitgutter'
 endif
 call vundle#end()            " required
