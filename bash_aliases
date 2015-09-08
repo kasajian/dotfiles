@@ -10,8 +10,6 @@ else # OS X `ls`
 fi
 alias ls='ls ${colorflag}'
 
-alias git-root=cd $(git rev-parse --show-toplevel)
-
 alias ..='cd ..'
 alias ...='...'
 
@@ -64,14 +62,6 @@ alias badge="tput bel"
 # For example, to list all directories that contain a certain file:
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1"
-
-# One of @janmoesen’s ProTip™s
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-	alias "$method"="lwp-request -m '$method'"
-done
-
-# Make Grunt print stack traces by default
-command -v grunt > /dev/null && alias grunt="grunt --stack"
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"

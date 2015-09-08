@@ -1,4 +1,6 @@
 set nocompatible              " be iMproved, required
+
+"Load plugins
 filetype off                  " required
 
 if has("win32")
@@ -21,15 +23,16 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'morhetz/gruvbox'
 if has("unix")
-  Plugin 'wakatime/vim-wakatime'
   Plugin 'airblade/vim-gitgutter'
 endif
 call vundle#end()            " required
 
 filetype plugin indent on    " required!
 
+" Don't do the default mswin bindings
 let skip_loading_mswin=1
 
+" Stuff I like
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
@@ -60,12 +63,14 @@ set ignorecase
 set nowb
 set noswapfile
 
+" Status line that I like
 " Show EOL type and last modified timestamp, right after the filename
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})\ %{fugitive#statusline()}%=%l,%c%V\ %P
 " another one -> set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
 
 syntax on
 
+" Set up the fonts and colors I like
 if has("gui_running")
   set background=light
   colorscheme solarized
@@ -85,15 +90,24 @@ else
   colorscheme gruvbox 
 endif
 
+" Make F5 bring up file explorer
 map <F5> :NERDTreeToggle<CR>
+
+" Make Ctrl-J split the line in normal mode.
 nnoremap <C-J> i<CR><Esc>
 
-" Getting out insert mode, alternatives to <Esc> and Ctrl-[
-"   Ctrl-L and Alt-L get out of insert mode.
+" All the aliases for Esc (exit Insert mode):
+"    Ctrl-[   <-- it's there by default
+"    Ctrl-L   <-- because that's how you exit Insert mode in EasyVim
+"    Alt-L    <-- So you can do it with your right hand
+"    ;;       <-- experimenting with this one
 imap <C-L> <ESC>
 imap ¬ <ESC>
+imap ;; <ESC>
 
-"  also mashing the keyboard
+" punch the homerow keys with your right hand.  
+"    I only like this one: ;lkj 
+
 "  get out of insert mode by mashing the keyboard
 " imap j;kl <ESC>
 " imap j;lk <ESC>
@@ -121,12 +135,13 @@ imap ;lkj <ESC>
 " imap lj;k <ESC>
 " set timeoutlen=500
 
-imap ;; <ESC>
 
-" Ctrl+S to save
+" Ctrl+S to save, works in Insert or Normal mode
 nmap <C-S> :w<CR>
 imap <C-S> <C-O>:w<CR>
 
+" leader key, by default, is two backslashes.
+" Leader+r means, run the current file, useful for when it's a .bat file
 nnoremap <leader>r :w<CR>:!%:p<CR>
 
 " Some remappings to work with the external environment
@@ -145,8 +160,9 @@ if has("gui")
   cnoremap <M-Space> <C-C>:simalt ~<CR>
 endif
 
+" Easy-motion plugin to use the leader kery
 map <Leader> <Plug>(easymotion-prefix)
 
-" formats the entire contens as json
+" This is just a note to myself.  Issuing this command formats a .json file
+" loaded into VIM
 " :%!python -m json.tool
-

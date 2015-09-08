@@ -30,3 +30,4 @@ export LC_ALL='en_US.UTF-8';
 export LESS_TERMCAP_md="${yellow}";
 export GREP_OPTIONS='--color=auto';
 
+source dnvm.sh

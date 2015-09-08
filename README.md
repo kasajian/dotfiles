@@ -22,3 +22,4 @@ Windows:
         git clone https://github.com/gmarik/Vundle.vim.git vimfiles/bundle/Vundle.vim
         vim +PluginInstall +qall    
     
+    If the last command causes Vim to be stuck at a blank screen, just press Enter
