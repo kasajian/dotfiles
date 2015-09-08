@@ -71,11 +71,11 @@ if has("gui_running")
   colorscheme solarized
  
   if has("gui_gtk2")
-    set guifont=Inconsolata\ 14
+    set guifont=Inconsolata\ 12
   elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h16
+    set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
-    set guifont=Consolas:h14:cANSI
+    set guifont=Consolas:h12:cANSI
   endif
 else
   if has("unix")
