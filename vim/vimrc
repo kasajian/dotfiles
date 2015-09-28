@@ -137,8 +137,8 @@ imap ;lkj <ESC>
 
 
 " Ctrl+S to save, works in Insert or Normal mode
-nmap <C-S> :w<CR>
-imap <C-S> <C-O>:w<CR>
+nmap <C-S> :w!<CR>
+imap <C-S> <C-O>:w!<CR>
 
 " leader key, by default, is two backslashes.
 " Leader+r means, run the current file, useful for when it's a .bat file
