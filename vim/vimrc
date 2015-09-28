@@ -142,7 +142,7 @@ imap <C-S> <C-O>:w!<CR>
 
 " leader key, by default, is two backslashes.
 " Leader+r means, run the current file, useful for when it's a .bat file
-nnoremap <leader>r :w<CR>:!%:p<CR>
+nnoremap <leader>r :w!<CR>:!%:p<CR>
 
 " Some remappings to work with the external environment
 "   Ctrl+X, Ctrl+C in Visual mode for Cut/Copy external clipboard
