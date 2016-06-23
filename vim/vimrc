@@ -99,10 +99,8 @@ nnoremap <C-J> i<CR><Esc>
 " All the aliases for Esc (exit Insert mode):
 "    Ctrl-[   <-- it's there by default
 "    Ctrl-L   <-- because that's how you exit Insert mode in EasyVim
-"    Alt-L    <-- So you can do it with your right hand
 "    ;;       <-- experimenting with this one
 imap <C-L> <ESC>
-imap ¬ <ESC>
 imap ;; <ESC>
 
 " punch the homerow keys with your right hand.  
@@ -159,9 +157,6 @@ if has("gui")
   inoremap <M-Space> <C-O>:simalt ~<CR>
   cnoremap <M-Space> <C-C>:simalt ~<CR>
 endif
-
-" Easy-motion plugin to use the leader kery
-map <Leader> <Plug>(easymotion-prefix)
 
 " This is just a note to myself.  Issuing this command formats a .json file
 " loaded into VIM
