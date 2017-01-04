@@ -32,12 +32,19 @@ filetype plugin indent on    " required!
 " Don't do the default mswin bindings
 let skip_loading_mswin=1
 
+syntax on                  " Enable syntax highlighting.
+
 " Stuff I like
-set shiftwidth=4
+set autoindent             " Indent according to previous line.
+set expandtab              " Use spaces instead of tabs.
+set softtabstop=4          " Tab key indents by 4 spaces.
+set shiftwidth=4           " >> indents by 4 spaces.
 set tabstop=4
-set softtabstop=4
-set autoindent
-set expandtab
+set shiftround             " >> indents to next multiple of 'shiftwidth'.
+
+set backspace=indent,eol,start  " Make backspace work as you would expect.
+set hidden                 " Switch between buffers without having to save first.
+set laststatus=2           " Always show statusline.
 set smarttab
 set smartcase
 set nobackup
@@ -48,27 +55,28 @@ set vb
 set novisualbell
 set visualbell t_vb=
 set ruler
-set laststatus=2
-set backspace=indent,eol,start
-set showmode
+set showmode               " Show current mode in command-line.
 set history=50
 let c_comment_strings=1
-set hlsearch
+set hlsearch               " Keep matches highlighted.
 set nohlsearch
 set scrolloff=3
-set showcmd
+set showcmd                " Show already typed keys when more are expected.
 set number
-set incsearch
+set incsearch              " Highlight while searching with / or ?.
 set ignorecase
 set nowb
 set noswapfile
+set ttyfast                " Faster redrawing.
+set lazyredraw             " Only redraw when necessary.
+set splitbelow             " Open new windows below the current window.
+set splitright             " Open new windows right of the current window.
+set synmaxcol   =200       " Only highlight the first 200 columns.
 
 " Status line that I like
 " Show EOL type and last modified timestamp, right after the filename
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})\ %{fugitive#statusline()}%=%l,%c%V\ %P
 " another one -> set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
-
-syntax on
 
 " Set up the fonts and colors I like
 if has("gui_running")
@@ -95,6 +103,7 @@ map <F5> :NERDTreeToggle<CR>
 
 " Make Ctrl-J split the line in normal mode.
 nnoremap <C-J> i<CR><Esc>
+
 
 " All the aliases for Esc (exit Insert mode):
 "    Ctrl-[   <-- it's there by default
@@ -157,6 +166,9 @@ if has("gui")
   inoremap <M-Space> <C-O>:simalt ~<CR>
   cnoremap <M-Space> <C-C>:simalt ~<CR>
 endif
+
+" Some commands I may want to turn on temmporarily
+"set list                   " Show non-printable characters.
 
 " This is just a note to myself.  Issuing this command formats a .json file
 " loaded into VIM
