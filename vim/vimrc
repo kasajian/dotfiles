@@ -22,6 +22,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'morhetz/gruvbox'
+Plugin 'twe4ked/vim-peepopen'
 if has("unix")
   Plugin 'airblade/vim-gitgutter'
 endif
