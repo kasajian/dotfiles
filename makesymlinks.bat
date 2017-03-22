@@ -30,6 +30,9 @@ echo Please move %vimfiles% folder.  Cannot make a link folder if real one exist
 :novimfiles
 rem get path of this bat file, with trailing backslash so we can constrcut
 set vimsubfolder=%~dp0vim
+
 mklink /J %vimfiles% %herepath%vim
 
 mklink /J %appdata%\console console
+
+mklink /J %userprofile%\.vim %userprofile%\dotfiles\vim
