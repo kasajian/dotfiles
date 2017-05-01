@@ -52,6 +52,7 @@ set nobackup
 set ai
 " set cul
 set showmatch
+set wildmenu
 set vb
 set novisualbell
 set visualbell t_vb=
