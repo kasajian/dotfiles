@@ -3,7 +3,7 @@ set nocompatible              " be iMproved, required
 "Load plugins
 filetype off                  " required
 
-if has("win32")
+if has("win32") || has("win32unix")
     set rtp+=~/vimfiles/bundle/Vundle.vim/
     let path='~/vimfiles/bundle'
     call vundle#begin(path)
