@@ -11,6 +11,7 @@ mklink /D %vimfiles% vim
 mklink /D %vimfiles80% vim
 
 rem get dir path of this bat file, with trailing backslash so we can construct
+set vimsubfolder=%~dp0vim
 mklink /D %vimfiles% %vimsubfolder%
 
 rem This is for the git vim.exe.  see above.
