@@ -45,3 +45,8 @@ if [ -f $pdir/bash_private ]; then
     ln -s -f $pdir/bash_private ~/.bash_private
 fi
 
+# 2018/6/13 tried on ubuntu (win10)
+# cd
+# ln -s ~/dotfiles/vim vimfiles
+# ln ~/dotfiles/vim/vimrc .vimrc
+# ln -s ~/dotfiles/vim .vim
