@@ -144,6 +144,8 @@ imap ;lkj <ESC>
 " imap lj;k <ESC>
 " set timeoutlen=500
 
+:let mapleader = " "
+map <Leader> <Plug>(easymotion-prefix)
 
 " Ctrl+S to save, works in Insert or Normal mode
 nmap <C-S> :w!<CR>
