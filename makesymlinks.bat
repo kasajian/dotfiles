@@ -21,4 +21,4 @@ mklink %home%\.vimrc %vimsubfolder%\vimrc
 rem this is for zconsole (not vim related)
 mklink /J %appdata%\console console
 
-mklink /D %userprofile%\.vim %vimsubfolder%
+mklink /D %home%\.vim %vimsubfolder%
