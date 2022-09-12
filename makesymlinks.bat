@@ -18,3 +18,4 @@ popd'
 REM mkdir -p ~/.vim/pack/tpope/start
 REM pushd ~/.vim/pack/tpope/start
 REM git clone https://tpope.io/vim/sensible.git
+REM popd
