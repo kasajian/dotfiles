@@ -11,7 +11,7 @@ pushd ..\.vim\pack\tpope\start
 git clone --depth=1 https://tpope.io/vim/sensible.git
 cd sensible
 git pull
-popd'
+popd
 
 
 :: bash / osx ???
