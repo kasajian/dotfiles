@@ -1,4 +1,4 @@
-git config --global core.editor C:/tools/vim/vim90/gvim.exe
+# git config --global core.editor C:/tools/vim/vim90/gvim.exe
 git config --global difftool.prompt false
 
 git config --global diff.tool winmerge
