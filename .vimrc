@@ -61,9 +61,24 @@ set formatoptions=qrn1
 "let g:netrw_preview=1       " (not sure what this does)
 
 
-set undodir=~/.vim/.undo//
-set backupdir=~/.vim/.backup//
-set directory=~/.vim/.swp//
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=~/.vim/undo-dir
+
+if !isdirectory($HOME."/.vim/.backup")
+    call mkdir($HOME."/.vim/.backup", "", 0700)
+endif
+" set backupdir=~/.vim/.backup
+
+if !isdirectory($HOME."/.vim/.swp")
+    call mkdir($HOME."/.vim/.swp", "", 0700)
+endif
+" set directory=~/.vim/.swp
 
 
 set clipboard=unnamed

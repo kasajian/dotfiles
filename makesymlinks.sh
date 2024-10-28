@@ -1,10 +1,10 @@
 mkdir -p ~/.vim/pack/tpope/start
-push ~/.vim/pack/tpope/start
+pushd ~/.vim/pack/tpope/start
 export GIT_SSL_NO_VERIFY=1
 git clone https://tpope.io/vim/sensible.git
 cd sensible
 git pull
-pop
+popd
 
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ## git config --global credential.credentialStore cache
