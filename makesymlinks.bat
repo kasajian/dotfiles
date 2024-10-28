@@ -1,3 +1,9 @@
+::
+:: Create this for neovim
+:: C:\Users\kenneth.kasajian\AppData\Local\nvim\init.vim
+::
+
+
 :: /J used so second parameter can be relative to this cwd, rather than the link
 mklink /J %appdata%\console console
 

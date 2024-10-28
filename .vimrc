@@ -51,17 +51,32 @@ set wrap
 set formatoptions=qrn1
 " set colorcolumn=85
 
-let g:netrw_banner=0        " disable annoying banner
-let g:netrw_browse_split=4  " open in prior window
-let g:netrw_altv=1          " open splits to the right
-let g:netrw_liststyle=3     " tree view
-let g:netrw_list_hide=netrw_gitignore#Hide()
-let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+"    let g:netrw_banner=0        " disable annoying banner
+"    let g:netrw_browse_split=4  " open in prior window
+"    let g:netrw_altv=1          " open splits to the right
+"    let g:netrw_liststyle=3     " tree view
+"    let g:netrw_list_hide=netrw_gitignore#Hide()
+"    let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 
-" set undodir=~/.vim/.undo//
-" set backupdir=~/.vim/.backup//
-" set directory=~/.vim/.swp//
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=~/.vim/undo-dir
+
+if !isdirectory($HOME."/.vim/.backup")
+    call mkdir($HOME."/.vim/.backup", "", 0700)
+endif
+" set backupdir=~/.vim/.backup
+
+if !isdirectory($HOME."/.vim/.swp")
+    call mkdir($HOME."/.vim/.swp", "", 0700)
+endif
+" set directory=~/.vim/.swp
 
 
 set clipboard=unnamed
