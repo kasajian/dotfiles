@@ -47,6 +47,7 @@ set showmatch
 set hlsearch
 
 set wrap
+set nowrapscan
 " set textwidth=79
 set formatoptions=qrn1
 " set colorcolumn=85
