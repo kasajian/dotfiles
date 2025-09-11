@@ -5,10 +5,11 @@ OS X or Linux
         curl --version
         git --version
 
-    cd
-    git clone https://github.com/kasajian/dotfiles.git
-    cd dotfiles
-    sh makesymlinks.sh
+    If so, do these steps:
+        cd
+        git clone https://github.com/kasajian/dotfiles.git
+        cd dotfiles
+        sh ./makesymlinks.sh
 
 Windows:
 
@@ -21,5 +22,4 @@ Windows:
         cd /d %USERPROFILE%
         git clone https://github.com/kasajian/dotfiles.git
         cd dotfiles
-        makesymlinks.bat
-
+        .\makesymlinks.bat
