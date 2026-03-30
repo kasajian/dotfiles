@@ -10,3 +10,5 @@ git config --global alias.l2 "log --graph --pretty=format:'%C(auto)%h %d%s %C(gr
 
 git config --global alias.b "branch --sort committerdate"
 git config --global alias.ba "branch -a --sort committerdate"
+
+git config --global core.longpaths true
