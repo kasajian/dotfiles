@@ -5,7 +5,6 @@ git clone https://tpope.io/vim/sensible.git
 cd sensible
 git pull
 popd
-
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ## git config --global credential.credentialStore cache
 #curl -LO https://aka.ms/gcm/linux-install-source.sh
