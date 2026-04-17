@@ -11,3 +11,4 @@ git config --global alias.ba "branch -a --sort committerdate"
 
 git config --global core.longpaths true
 git config --global credential.useHttpPath true
+git config --global pull.rebase true
