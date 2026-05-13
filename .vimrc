@@ -9,6 +9,9 @@ else
   set background=dark
 endif
 
+command W :execute ':silent w sudo vim vimrc  tee % > /dev/null' | :edit!
+cmap w!! w !sudo /usr/bin/tee >/dev/null "%"
+
 set path+=**
 
 set encoding=utf-8
