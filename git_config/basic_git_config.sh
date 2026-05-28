@@ -13,4 +13,5 @@ git config --global core.longpaths true
 git config --global credential.useHttpPath true
 git config --global pull.rebase true
 git config --global init.defaultBranch main
+git config --global core.symlinks false
 
