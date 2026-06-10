@@ -1,6 +1,5 @@
 set nocompatible
 
-syntax enable
 filetype plugin indent on
 
 if has("gui_running")
@@ -9,18 +8,20 @@ else
   set background=dark
 endif
 
-command W :execute ':silent w sudo vim vimrc  tee % > /dev/null' | :edit!
-cmap w!! w !sudo /usr/bin/tee >/dev/null "%"
+syntax enable
+
+command W execute 'silent! write !sudo tee % >/dev/null' | edit!
+cnoremap w!! w !sudo /usr/bin/tee >/dev/null "%"
 
 set path+=**
 
 set encoding=utf-8
 set scrolloff=3
 set autoindent
-set autowriteall
+" set autowriteall   " too aggressive: auto-saves on buffer switch
+set hidden          " keep undo history when switching buffers
 set showmode
 set showcmd
-set nohidden
 set wildignore+=*/node_modules/*,*/__pycache__/,*/bin/*
 set wildmenu
 " set wildmode=list:longest
@@ -33,7 +34,6 @@ set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
 set number
-set undofile
 " set undolevels
 " set undoreload
 
@@ -55,36 +55,40 @@ set nowrapscan
 set formatoptions=qrn1
 " set colorcolumn=85
 
-"let g:netrw_banner=0        " disable annoying banner
-"let g:netrw_browse_split=4  " open in prior window
-"let g:netrw_altv=1          " open splits to the right
-"let g:netrw_liststyle=3     " tree view
-"let g:netrw_list_hide=netrw_gitignore#Hide()
-"let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
-"let g:netrw_winsize=20      " (not sure what this does)
-"let g:netrw_preview=1       " (not sure what this does)
+let g:netrw_banner=0        " disable banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 
-if !isdirectory($HOME."/.vim")
-    call mkdir($HOME."/.vim", "", 0770)
+let s:vim_dir = expand('~/.vim')
+
+if !isdirectory(s:vim_dir)
+    call mkdir(s:vim_dir, 'p')
 endif
 
-if !isdirectory($HOME."/.vim/undo-dir")
-    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+if !isdirectory(s:vim_dir . '/undo-dir')
+    call mkdir(s:vim_dir . '/undo-dir', 'p')
 endif
 set undodir=~/.vim/undo-dir
+set undofile
 
-if !isdirectory($HOME."/.vim/.backup")
-    call mkdir($HOME."/.vim/.backup", "", 0700)
+if !isdirectory(s:vim_dir . '/.backup')
+    call mkdir(s:vim_dir . '/.backup', 'p')
 endif
-" set backupdir=~/.vim/.backup
+set backupdir=~/.vim/.backup//
 
-if !isdirectory($HOME."/.vim/.swp")
-    call mkdir($HOME."/.vim/.swp", "", 0700)
+if !isdirectory(s:vim_dir . '/.swp')
+    call mkdir(s:vim_dir . '/.swp', 'p')
 endif
-" set directory=~/.vim/.swp
+set directory=~/.vim/.swp//
 
 
-set clipboard=unnamed
-set clipboard^=unnamed,unnamedplus
+if has('unnamedplus')
+    set clipboard=unnamedplus
+else
+    set clipboard=unnamed
+endif
 set mouse=a 

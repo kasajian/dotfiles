@@ -1,37 +1,31 @@
-# Source global definitions
+# ============================================================
+# bashrc_macos — macOS entry point
+# Symlink or source this from ~/.bashrc or ~/.bash_profile
+# ============================================================
+
+# Source system-wide bashrc
 if [ -f /etc/bashrc ]; then
-        . /etc/bashrc
+    . /etc/bashrc
 fi
 
-if [ -f ~/.bash_aliases ]; then
-        . ~/.bash_aliases
+# --- Homebrew ---
+if [ -f /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"      # Apple Silicon
+elif [ -f /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"          # Intel
 fi
 
-if [ -f ~/.bash_private ]; then
-        . ~/.bash_private
+# --- Bash Completion (Homebrew) ---
+if [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+    . /opt/homebrew/etc/profile.d/bash_completion.sh
+elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
+    . /usr/local/etc/profile.d/bash_completion.sh
 fi
 
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
-bind '"\eOA": history-search-backward'
-bind '"\eOB": history-search-forward'
-
+# --- macOS-specific PATH ---
 export PATH="/usr/local/sbin:$PATH"
-export EDITOR='vim';
-stty -ixon
 
-NODE_REPL_HISTORY_FILE=~/.node_history;
-NODE_REPL_HISTORY_SIZE='32768';
-export HISTSIZE='32768';
-export HISTFILESIZE="${HISTSIZE}";
-export HISTCONTROL='ignoreboth';
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
-export LESS_TERMCAP_md="${yellow}";
-export GREP_OPTIONS='--color=auto';
-
-source dnvm.sh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# --- Source the shared bashrc ---
+if [ -f ~/dotfiles/bashrc ]; then
+    . ~/dotfiles/bashrc
+fi

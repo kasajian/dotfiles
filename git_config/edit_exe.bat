@@ -1,1 +1,0 @@
-git.exe config --global core.editor "\"C:\Windows\System32\edit.exe\""

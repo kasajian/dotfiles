@@ -1,0 +1,40 @@
+# ============================================================
+# bashrc_linux — Linux / WSL (Ubuntu) / Termux entry point
+# Symlink or source this from ~/.bashrc
+# ============================================================
+
+# Source system-wide bashrc (Ubuntu/Debian)
+if [ -f /etc/bash.bashrc ]; then
+    . /etc/bash.bashrc
+elif [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# --- WSL Detection ---
+if grep -qi microsoft /proc/version 2>/dev/null; then
+    # WSL-specific
+    export BROWSER='wslview'
+    alias open='explorer.exe 2>/dev/null || wslview'
+elif [ -n "$TERMUX_VERSION" ]; then
+    # Termux-specific
+    export BROWSER='termux-open-url'
+    alias open='termux-open'
+else
+    # Native Linux
+    alias open='xdg-open'
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
+
+# --- Linux-specific PATH additions ---
+# (most are handled in the shared bashrc)
+
+# --- Bash Completion ---
+# On Ubuntu/Debian, bash-completion is auto-sourced via /etc/bash.bashrc
+# If not already present, install: sudo apt install bash-completion
+# Verify: complete -p git 2>/dev/null && echo "git completions loaded"
+
+# --- Source the shared bashrc ---
+if [ -f ~/dotfiles/bashrc ]; then
+    . ~/dotfiles/bashrc
+fi

@@ -1,27 +1,29 @@
-::
-:: Create this for neovim
-:: C:\Users\kenneth.kasajian\AppData\Local\nvim\init.vim
-::
+@echo off
+:: ============================================================
+:: makesymlinks.bat — Windows setup script
+:: Run from the dotfiles repo directory (as Administrator for symlinks)
+:: ============================================================
 
+echo Setting up dotfiles...
 
-:: /J used so second parameter can be relative to this cwd, rather than the link
-mklink /J %appdata%\console console
-
-:: Link .vimrc in the cwd to ~\.vimrc
-mklink ..\.vimrc .\dotfiles\.vimrc
-
-:: VIM Plugins
-:: 	Install "sensible"
-mkdir ..\.vim\pack\tpope\start
-pushd ..\.vim\pack\tpope\start
-git clone --depth=1 https://tpope.io/vim/sensible.git
-cd sensible
-git pull
+:: --- Vim plugin: sensible ---
+if not exist "%USERPROFILE%\.vim\pack\tpope\start" mkdir "%USERPROFILE%\.vim\pack\tpope\start"
+pushd "%USERPROFILE%\.vim\pack\tpope\start"
+if not exist sensible (
+    git clone --depth=1 https://tpope.io/vim/sensible.git
+) else (
+    cd sensible
+    git pull
+)
 popd
 
+:: --- Symlink .vimrc ---
+:: Backup existing .vimrc if it's a regular file
+if exist "%USERPROFILE%\.vimrc" (
+    echo   Backing up existing .vimrc to .vimrc.bak
+    move "%USERPROFILE%\.vimrc" "%USERPROFILE%\.vimrc.bak"
+)
+mklink "%USERPROFILE%\.vimrc" "%USERPROFILE%\dotfiles\.vimrc"
+echo   ~/.vimrc -^> ~/dotfiles/.vimrc
 
-:: bash / osx ???
-REM mkdir -p ~/.vim/pack/tpope/start
-REM pushd ~/.vim/pack/tpope/start
-REM git clone https://tpope.io/vim/sensible.git
-REM popd
+echo Done.

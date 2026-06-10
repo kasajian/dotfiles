@@ -9,9 +9,14 @@ git config --global alias.l2 "log --graph --pretty=format:'%C(auto)%h %d%s %C(gr
 git config --global alias.b "branch --sort committerdate"
 git config --global alias.ba "branch -a --sort committerdate"
 
-git config --global core.longpaths true
+# Windows-only: enable long path support (>260 chars)
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*) git config --global core.longpaths true ;;
+esac
+
 git config --global credential.useHttpPath true
 git config --global pull.rebase true
 git config --global init.defaultBranch main
 git config --global core.symlinks false
+git config --global push.autoSetupRemote true
 
