@@ -1,3 +1,17 @@
+#!/usr/bin/env bash
+# ============================================================
+# diff_win_config.sh — Windows-only diff/merge tool config
+# Skip on macOS/Linux
+# ============================================================
+
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*) ;;
+    *)
+        echo "Skipping: diff_win_config.sh is Windows-only (WinMerge, KDiff3)"
+        exit 0
+        ;;
+esac
+
 # git config --global core.editor C:/tools/vim/vim90/gvim.exe
 git config --global difftool.prompt false
 
