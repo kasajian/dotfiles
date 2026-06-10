@@ -136,9 +136,10 @@ bashrc_linux    ← Linux/WSL/Termux entry point (OS detection, sources bashrc)
 After setup, run these manually from the `dotfiles` directory:
 
 ```bash
-bash git_config/basic_git_config.sh    # aliases, colors, pull.rebase
-bash git_config/diff_win_config.sh     # Windows diff/merge tools (WinMerge, KDiff3)
-bash git_config/username_git_config.sh # set your user.name / user.email
+bash git_config/core.sh              # colors, aliases, line endings, rebase, etc.
+bash git_config/diff_win_config.sh   # Windows diff/merge tools (WinMerge, KDiff3)
+bash git_config/username_git_config.sh  # set global user.name / user.email
+bash git_config/edit_exe.sh          # set core.editor (Microsoft edit)
 ```
 
 Review each script before running — they apply `--global` settings.

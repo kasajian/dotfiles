@@ -82,6 +82,30 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+# --- Git Completion ---
+# Usually auto-loaded by bash-completion; this is a fallback
+if ! type -t __git_complete &>/dev/null; then
+    for f in /usr/share/bash-completion/completions/git \
+             /opt/homebrew/etc/bash_completion.d/git-completion.bash \
+             /usr/local/etc/bash_completion.d/git-completion.bash \
+             /etc/bash_completion.d/git-completion.bash; do
+        [ -f "$f" ] && { . "$f"; break; }
+    done
+fi
+
+# --- fzf (Fuzzy Finder) ---
+# Ctrl+R: fuzzy history   Ctrl+T: fuzzy file finder   Alt+C: fuzzy cd
+# **<TAB>: fuzzy path completion
+if [ -f ~/.fzf.bash ]; then
+    . ~/.fzf.bash
+elif [ -f /opt/homebrew/opt/fzf/shell/key-bindings.bash ]; then
+    . /opt/homebrew/opt/fzf/shell/key-bindings.bash
+    [ -f /opt/homebrew/opt/fzf/shell/completion.bash ] && . /opt/homebrew/opt/fzf/shell/completion.bash
+elif [ -f /usr/local/opt/fzf/shell/key-bindings.bash ]; then
+    . /usr/local/opt/fzf/shell/key-bindings.bash
+    [ -f /usr/local/opt/fzf/shell/completion.bash ] && . /usr/local/opt/fzf/shell/completion.bash
+fi
+
 # --- Source private/local overrides (secrets, machine-specific) ---
 if [ -f ~/.bash_private ]; then
     . ~/.bash_private
