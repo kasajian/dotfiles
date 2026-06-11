@@ -20,7 +20,17 @@ export EDITOR='vim'
 export VISUAL='vim'
 
 # --- PATH ---
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+# Prepend to PATH if not already present
+add_to_path_front() {
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) export PATH="$1:$PATH" ;;
+    esac
+}
+
+add_to_path_front "$HOME/.local/bin"
+add_to_path_front "$HOME/bin"
+
 
 # --- Fix Ctrl-S (XON/XOFF flow control) ---
 stty -ixon 2>/dev/null

@@ -9,10 +9,12 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # --- Homebrew ---
-if [ -f /opt/homebrew/bin/brew ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"      # Apple Silicon
-elif [ -f /usr/local/bin/brew ]; then
-    eval "$(/usr/local/bin/brew shellenv)"          # Intel
+if [ -z "$HOMEBREW_PREFIX" ]; then
+    if [ -f /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"      # Apple Silicon
+    elif [ -f /usr/local/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"          # Intel
+    fi
 fi
 
 # --- Bash Completion (Homebrew) ---
@@ -23,7 +25,10 @@ elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
 fi
 
 # --- macOS-specific PATH ---
-export PATH="/usr/local/sbin:$PATH"
+case ":$PATH:" in
+    *":/usr/local/sbin:"*) ;;
+    *) export PATH="/usr/local/sbin:$PATH" ;;
+esac
 
 # --- Source the shared bashrc ---
 if [ -f ~/dotfiles/bashrc ]; then

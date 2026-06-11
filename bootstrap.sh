@@ -62,9 +62,7 @@ fi
 popd > /dev/null
 
 # --- Symlink .vimrc ---
-if [ -f ~/.vimrc ] && [ ! -L ~/.vimrc ]; then
-    mv ~/.vimrc ~/.vimrc.bak && echo "    backed up ~/.vimrc -> ~/.vimrc.bak"
-fi
+rm -f ~/.vimrc
 ln -sf "$DOTFILES_DIR/.vimrc" ~/.vimrc
 
 # --- Symlink bashrc ---
@@ -75,9 +73,7 @@ elif [ "$OS" = "Linux" ]; then
 fi
 
 if [ -n "$BASHRC_SRC" ]; then
-    if [ -f ~/.bashrc ] && [ ! -L ~/.bashrc ]; then
-        mv ~/.bashrc ~/.bashrc.bak && echo "    backed up ~/.bashrc -> ~/.bashrc.bak"
-    fi
+    rm -f ~/.bashrc
     ln -sf "$BASHRC_SRC" ~/.bashrc
 fi
 

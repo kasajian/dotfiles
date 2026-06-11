@@ -28,10 +28,9 @@ popd
 
 :: --- Symlink .vimrc ---
 :: Remove any existing .vimrc (file or symlink) so mklink can recreate it
-if exist "%USERPROFILE%\.vimrc" (
-    echo     backed up .vimrc -^> .vimrc.bak
-    move /Y "%USERPROFILE%\.vimrc" "%USERPROFILE%\.vimrc.bak" >nul
-)
+dir /a "%USERPROFILE%\.vimrc" >nul 2>&1
+if not errorlevel 1 del /f /q "%USERPROFILE%\.vimrc"
 mklink "%USERPROFILE%\.vimrc" "%USERPROFILE%\dotfiles\.vimrc" >nul
+
 
 echo ==^> Done: .vimrc, vim-sensible
