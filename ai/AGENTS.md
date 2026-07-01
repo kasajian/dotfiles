@@ -43,7 +43,7 @@
 - Parameterization: declare all configurable values as variables at the top of each script;
 
 ## Output & Environment
-- Protocol: When rendering Markdown content within a code block, use the plaintext block type instead of nested triple-backticks. Use line delimiters to separate internal file contents, ensuring the entire multi-file structure is contained within a single code block; Prefer ASCII unless non-ASCII is required.  Avoid em-dash;
+- Protocol: When rendering Markdown content within a code block, use the plaintext block type instead of nested triple-backticks. Use line delimiters to separate internal file contents, ensuring the entire multi-file structure is contained within a single code block; Prefer ASCII unless non-ASCII is required.  Avoid em-dash.  Make table columns line-up when Markdown viewed as ASCII;
 - Shell Output: use a single, complete, plaintext code block; no fragments;
 - Windows Environment:
   - Use iwr on PowerShell, %SystemRoot%\System32\curl.exe on CMD;
