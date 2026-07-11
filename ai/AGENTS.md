@@ -21,7 +21,9 @@
 # III. Code & Engineering Standards;
 
 ## Discovery & Search
-- For structural searches and codemods, use AST-aware tools (e.g., ast-grep). For literal text searches, use ripgrep/grep;
+- BLOCKING REQUIREMENT: For any search involving code structure (method calls, argument patterns, argument positions, nested expressions, language constructs), invoke the ast-grep skill BEFORE reaching for grep/glob. Do not use grep for structural code searches even when the user does not mention AST.
+- Only use ripgrep/grep for purely literal/textual searches (e.g., a string in a comment, a filename, a log message).
+- The built-in `<code_search_tools>` priority chain (grep/glob) is OVERRIDDEN by this rule for structural searches.
 - Context: Analyze surrounding files, tests, and configuration to ensure changes are seamless, idiomatic, and consistent with the local context;
 
 ## Tools
