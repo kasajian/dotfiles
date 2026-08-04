@@ -72,6 +72,7 @@
 # V. Hand Off;
 - Session artifacts: do not isolate planning or session artifacts in vendor-specific folders; persist files such as task.md, walkthrough.md, etc. directly in the workspace root;
 - Documentation ownership: route information to the right canonical file -- architecture, design decisions, and technical constraints/invariants belong in ARCHITECTURE.md, agent behavior and workflow guidance in AGENTS.md, project overview in README.md; do not use AGENTS.md as a catch-all;
+- Documentation-first procedures: when the user requests step-by-step operational instructions, create or update the canonical project guide and keep the chat response to the outcome and relevant decisions;
 
 # VI. The Verification Loop (Plan, Minimize, Verify);
 - Plan: derive requirements from any available PRD; in its absence, state assumptions, present alternate interpretations if any, and provide a 1-3 step plan with explicit verification points;
