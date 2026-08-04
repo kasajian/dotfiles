@@ -13,9 +13,9 @@
   1. Argue against the current design;
   2. Generate alternative approaches to the same goal;
   3. Identify assumptions the current design relies on;
-- Review all alternatives — not to replace the design, but to confirm the choice and expose hidden assumptions;
+- Review all alternatives -- not to replace the design, but to confirm the choice and expose hidden assumptions;
 - Any assumption surfaced that was not explicitly intended must be addressed with a direct "do not" constraint added to the proposal;
-- The review runs internally before presenting. The user receives the version that already survived the review — not the first-draft version;
+- The review runs internally before presenting. The user receives the version that already survived the review -- not the first-draft version;
 - Standard: upon challenge, no clearly superior alternative should remain -- the best available option was already selected and presented;
 
 # III. Code & Engineering Standards;
@@ -61,6 +61,7 @@
 - HTTP/S: Unless indicated, assume anonymous access when getting web content;
 - Configuration: When instructing the user, prefer CLI instructions over GUI;
 - Do not suggest workarounds for already ruled-out items;
+- For temporary tool artifacts, prefer scratch or already-ignored paths; do not edit .gitignore unless explicitly asked;
 
 ## Rule Conflict Protocol
 - When a user instruction conflicts with an established rule in this file or a companion file (e.g., ARCHITECTURE.md):
@@ -78,6 +79,7 @@
 - Plan: derive requirements from any available PRD; in its absence, state assumptions, present alternate interpretations if any, and provide a 1-3 step plan with explicit verification points;
 - Minimize: make surgical changes only. No extra features, no stylistic churn; every changed line must trace to the user's request;
 - Verify: prefer BDD or TDD (write tests before or alongside implementation) unless there are insurmountable constraints; add a failing test or reproducible check for bugfixes; run dry-runs for structural rewrites; confirm tests pass and no regressions;
+- Do not declare a requirement impossible without strong evidence; if unresolved, say "I can't figure it out yet.";
 - Lifecycle: For extensive edits use iterative loops or tools (e.g., "Ralph") and show dry-runs before applying changes;
 
 # VII. Grill Me;
