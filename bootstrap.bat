@@ -5,9 +5,8 @@
 :: ============================================================
 
 :: --- Admin check ---
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    echo ERROR: This script requires Administrator privileges (for mklink).
+fltmc >nul 2>&1 || (
+    echo ERROR: Administrator privileges required for this operation.
     echo Right-click Command Prompt ^> Run as Administrator, then re-run.
     exit /b 1
 )
@@ -27,10 +26,8 @@ if not exist sensible (
 popd
 
 :: --- Symlink .vimrc ---
-:: Remove any existing .vimrc (file or symlink) so mklink can recreate it
 dir /a "%USERPROFILE%\.vimrc" >nul 2>&1
 if not errorlevel 1 del /f /q "%USERPROFILE%\.vimrc"
 mklink "%USERPROFILE%\.vimrc" "%USERPROFILE%\dotfiles\.vimrc" >nul
-
 
 echo ==^> Done: .vimrc, vim-sensible
