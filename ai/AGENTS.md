@@ -36,7 +36,7 @@
 
 ## Architecture Decision Records (ADR)
 - When making an architectural or significant design decision, produce an ADR capturing: context, options considered, decision made, and why alternatives were rejected;
-- This is the persistent artifact of the adversarial validation process in §II -- traceability of the "why" over time;
+- This is the persistent artifact of the adversarial validation process in the Adversarial Validation section -- traceability of the "why" over time;
 - Bug-fix rationale (what broke, why, what was tried) belongs in the commit message or an ADR, not in source comments;
 
 ## Critical Convention Escalation
@@ -91,7 +91,7 @@
 - Every agent must define a concrete, failing verification step (automated test, dry-run, manual check, or observable failure condition) *before* proposing any code.
 - The agent must not state or imply the code works until that verification passes.
 - If the agent cannot run the verification itself, it must explicitly request that the user perform it and report the result; the task remains incomplete until verification succeeds.
-- Never present unverified code as “done” or “working”.
+- Never present unverified code as "done" or "working".
 
 ## The Verification Loop (Plan, Minimize, Verify);
 - Plan: derive requirements from any available PRD; in its absence, state assumptions, present alternate interpretations if any, and provide a 1-3 step plan with explicit verification points;
