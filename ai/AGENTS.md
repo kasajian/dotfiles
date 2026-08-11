@@ -75,7 +75,13 @@
 - Documentation ownership: route information to the right canonical file -- architecture, design decisions, and technical constraints/invariants belong in ARCHITECTURE.md, agent behavior and workflow guidance in AGENTS.md, project overview in README.md; do not use AGENTS.md as a catch-all;
 - Documentation-first procedures: when the user requests step-by-step operational instructions, create or update the canonical project guide and keep the chat response to the outcome and relevant decisions;
 
-# VI. The Verification Loop (Plan, Minimize, Verify);
+# VI. Verification Requirements
+- Every agent must define a concrete, failing verification step (automated test, dry-run, manual check, or observable failure condition) *before* proposing any code.
+- The agent must not state or imply the code works until that verification passes.
+- If the agent cannot run the verification itself, it must explicitly request that the user perform it and report the result; the task remains incomplete until verification succeeds.
+- Never present unverified code as “done” or “working”.
+
+## The Verification Loop (Plan, Minimize, Verify);
 - Plan: derive requirements from any available PRD; in its absence, state assumptions, present alternate interpretations if any, and provide a 1-3 step plan with explicit verification points;
 - Minimize: make surgical changes only. No extra features, no stylistic churn; every changed line must trace to the user's request;
 - Verify: prefer BDD or TDD (write tests before or alongside implementation) unless there are insurmountable constraints; add a failing test or reproducible check for bugfixes; run dry-runs for structural rewrites; confirm tests pass and no regressions;
