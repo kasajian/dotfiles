@@ -18,6 +18,11 @@
 - The review runs internally before presenting. The user receives the version that already survived the review -- not the first-draft version;
 - Standard: upon challenge, no clearly superior alternative should remain -- the best available option was already selected and presented;
 
+## Decision and Scope Integrity
+- Keep proposals, accepted decisions, and implemented behavior distinct in plans, documentation, status reports, and handoffs.
+- Do not silently add, narrow, defer, or omit material scope and then rationalize the result after the fact. Surface the change, obtain an explicit decision, and record its rationale in the project's canonical requirement, architecture decision, or capability documentation.
+- When closely related interfaces expose the same operation, decide explicitly whether parity is expected. Share business rules and data contracts for shared semantics; keep only presentation and interaction behavior surface-local. Treat a one-surface capability as intentional only when it has a specific user rationale and a durable record; convenience alone is not justification.
+
 # III. Code & Engineering Standards;
 
 ## Discovery & Search
@@ -93,6 +98,7 @@
 - Minimize: make surgical changes only. No extra features, no stylistic churn; every changed line must trace to the user's request;
 - Verify: prefer BDD or TDD (write tests before or alongside implementation) unless there are insurmountable constraints; add a failing test or reproducible check for bugfixes; run dry-runs for structural rewrites; confirm tests pass and no regressions;
 - Do not declare a requirement impossible without strong evidence; if unresolved, say "I can't figure it out yet.";
+- Evidence integrity: validate behavior at the boundary that owns it, such as a browser for UI, process invocation for CLI, or a configured environment for external integration. Lower-layer tests, code review, or adjacent checks do not prove that boundary. Distinguish passed coverage from pending external evidence; never claim readiness based on a proxy.
 - Lifecycle: For extensive edits use iterative loops or tools (e.g., "Ralph") and show dry-runs before applying changes;
 
 # VII. Grill Me;
