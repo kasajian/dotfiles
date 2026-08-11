@@ -30,6 +30,11 @@
 ## Architecture Decision Records (ADR)
 - When making an architectural or significant design decision, produce an ADR capturing: context, options considered, decision made, and why alternatives were rejected;
 - This is the persistent artifact of the adversarial validation process in §II -- traceability of the "why" over time;
+- Bug-fix rationale (what broke, why, what was tried) belongs in the commit message or an ADR, not in source comments;
+
+## Critical Convention Escalation
+- When a fix depends on a critical, generic coding/platform convention (not mere style) -- one where violating it causes silent failure, data loss, or incorrect behavior in other contexts, not just this line -- do not document that convention as an inline source comment; if it is not specific to code being commented, it does not belong there;
+- Propose developer doc updates by identifying specific pitfalls, explaining their impact, highlighting violated coding practices, and recommending permanent additions to project or global reference docs.
 
 ## Canonical Vocabulary
 - When a recurring pattern, constraint, or concept is being described repeatedly in long-form, recognize that as a naming opportunity; assign it a precise term and use it consistently across conversation, code, comments, and documentation; if the user names something in conversation, use that exact name in code -- do not silently translate it to a different technical term;
@@ -39,7 +44,7 @@
 - Consistency: Rigorously adhere to existing workspace conventions, architectural patterns, and style (naming, formatting, typing, commenting);
 - Prioritize readability, traceability, and maintainability; avoid opaque logic and undocumented workarounds;
 - Idempotent: check state, skip if matching, revert/reapply if conflicting;
-- Comments: document the "why", when code purpose isn't obvious; wrong comments are worse than no comments -- when behavior changes, update the comment in the same change; if uncertain whether a comment is still accurate, revise or remove it;
+- Comments: document the "why" when code purpose isn't obvious; wrong comments are worse than no comments -- when behavior changes, update the comment in the same change, and if uncertain whether a comment is still accurate, revise or remove it; keep comments to present-tense design rationale, never narrative bug fixes, investigation trails, or failed alternatives -- route those to commit messages or ADRs; never inline generic-platform tutorials (language/runtime/library facts that hold anywhere, e.g. an API's async semantics) -- at most a one-line site-specific pointer to the constraint it enforces ("must block synchronously here; see the referenced docs"), and escalate the underlying knowledge per the Critical Convention Escalation rule;
 - Parameterization: declare all configurable values as variables at the top of each script;
 
 ## Output & Environment
