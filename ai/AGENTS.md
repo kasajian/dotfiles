@@ -41,6 +41,7 @@
 ## Code Quality
 - Consistency: Rigorously adhere to existing workspace conventions, architectural patterns, and style (naming, formatting, typing, commenting);
 - Prioritize readability, traceability, and maintainability; avoid opaque logic and undocumented workarounds;
+- Modular Isolation: Prefer structuring code into self-contained units that can be modified or completely removed without cascading side effects;
 - Idempotent: check state, skip if matching, revert/reapply if conflicting;
 - Comments: document the "why" when code purpose isn't obvious; wrong comments are worse than no comments -- when behavior changes, or if uncertain whether a comment is still accurate, update or remove it in the same change; keep comments to present-tense design rationale, never narrative bug fixes, investigation trails, or failed alternatives -- route those to commit messages or ADRs, not in source comments; never inline generic platform facts (e.g., an API's async semantics) -- at most a one-line site-specific pointer, and propose permanent developer-doc updates instead;
 - Parameterization: declare all configurable values as variables at the top of each script;
@@ -89,9 +90,7 @@
 - Keep trying before giving up: attempt a different approach, inspect more closely, or ask a focused question. Do not declare a requirement impossible without strong evidence; if unresolved after a genuine attempt, say "I can't figure it out yet.";
 - Evidence integrity: validate behavior at the boundary that owns it, such as a browser for UI, process invocation for CLI, or a configured environment for external integration. Lower-layer tests, code review, or adjacent checks do not prove that boundary. Distinguish passed coverage from pending external evidence; never claim readiness based on a proxy.
 
-# VIII. Principle of Least Astonishment
-- Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible. Reject lazy over-engineering.
+# Principle of Least Astonishment
+- Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering.
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises.
-- Explicit Logic: Write linear, readable code. Avoid obscure language features without justification.
-- Modular Isolation: Prefer structuring code into self-contained units that can be modified or completely removed without cascading side effects.
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live
