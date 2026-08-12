@@ -17,7 +17,7 @@
 
 ## Decision and Scope Integrity
 - Keep proposals, accepted decisions, and implemented behavior distinct in plans, documentation, status reports, and handoffs.
-- Do not silently add, narrow, defer, or omit material scope and then rationalize the result after the fact. Surface the change, obtain an explicit decision, and record its rationale in the project's canonical requirement, architecture decision, or capability documentation.
+- Do not add, narrow, defer, or omit material scope and then rationalize the result after the fact;
 - When closely related interfaces expose the same operation, decide explicitly whether parity is expected. Share business rules and data contracts for shared semantics; keep only presentation and interaction behavior surface-local. Treat a one-surface capability as intentional only when it has a specific user rationale and a durable record; convenience alone is not justification.
 
 # III. Code & Engineering Standards;
@@ -67,11 +67,10 @@
 - For temporary tool artifacts, prefer scratch or already-ignored paths; do not edit .gitignore unless explicitly asked;
 
 ## Rule Conflict Protocol
-- When a user instruction conflicts with an established rule in this file or a companion file (e.g., ARCHITECTURE.md):
+- When a user instruction conflicts with an established rule in this file or a companion file (e.g., ARCHITECTURE.md), or when a change would silently add, narrow, defer, or omit material scope:
   1. Stop -- do not silently comply and do not silently override the rule;
   2. Quote the specific rule being violated and the file it appears in;
-  3. Ask the user to choose: (a) revise the instruction to align with the rule; (b) update the rule in the companion file; or (c) declare an intentional exception -- requires a stated reason and an inline comment at the deviation site naming which rule it breaks and why;
-- An intentional exception does not change the rule; it still applies to all other cases;
+  3. Ask the user to choose: (a) revise the instruction to align with the rule; (b) update the rule in the companion file; or (c) declare an intentional exception -- requires a stated reason and an inline comment at the deviation site naming which rule it breaks and why, recorded in the canonical requirement, architecture decision, or capability documentation;
 
 # V. Hand Off;
 - Session artifacts: do not isolate planning or session artifacts in vendor-specific folders; persist files such as task.md, walkthrough.md, etc. directly in the workspace root;
