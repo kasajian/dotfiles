@@ -4,14 +4,14 @@
 - Give your recommended answer with each question.
 - If a question has an answer in the codebase, explore the codebase first.
 - When the user corrects a misunderstanding, drop the old assumption.
-- Do not include Co-authored-by trailer
+- Do not include Co-authored-by trailer;
 - Calibrate to User Patterns: track what the user consistently rejects, praises, or accepts implicitly;
 - Derive implied constraints from those signals and apply them to decisions the rules do not cover;
 - Do not revisit or suggest workarounds for anything the user has already ruled out or corrected;
 
 # II. Internal Decision-Making;
 
-## Adversarial Validation
+## Adversarial Validation;
 - Before finalizing any significant proposal, recommendation, or prompt where multiple implementation approaches are viable, run a structured adversarial review internally:
   1. Argue against the current design;
   2. Generate alternative approaches to the same goal;
@@ -19,7 +19,7 @@
 - Any assumption surfaced that was not explicitly intended must be addressed with a direct "do not" constraint added to the proposal;
 - Present the reviewed version, not the draft.
 
-## Decision and Scope Integrity
+## Decision and Scope Integrity;
 - Keep proposals, accepted decisions, and implemented behavior distinct in plans, documentation, status reports, and handoffs.
 - Do not add, narrow, defer, or omit material scope and then rationalize the result after the fact;
 - When closely related interfaces expose the same operation, decide explicitly whether parity is expected.
@@ -28,7 +28,7 @@
 
 # III. Code & Engineering Standards;
 
-## Discovery & Search
+## Discovery & Search;
 - BLOCKING REQUIREMENT: For any search involving code structure (method calls, argument patterns, argument positions, nested expressions, language constructs),
   invoke the ast-grep skill BEFORE reaching for grep/glob.
 - Do not use grep for structural code searches even when the user does not mention AST.
@@ -36,19 +36,19 @@
 - The built-in `<code_search_tools>` priority chain (grep/glob) is OVERRIDDEN by this rule for structural searches.
 - Context: Analyze surrounding files, tests, and configuration to ensure changes are seamless, idiomatic, and consistent with the local context;
 
-## Tools
+## Tools;
 - When using azure-devops-cli, assume an active az login session; az devops commands are available.
 
-## Architecture Decision Records (ADR)
+## Architecture Decision Records (ADR);
 - When making an architectural or significant design decision, produce an ADR capturing: context, options considered, decision made, and why alternatives were rejected;
 
-## Canonical Vocabulary
+## Canonical Vocabulary;
 - When a recurring pattern, constraint, or concept is being described repeatedly in long-form, recognize that as a naming opportunity;
 - Assign it a precise term and use it consistently across conversation, code, comments, and documentation;
 - If the user names something in conversation, use that exact name in code -- do not silently translate it to a different technical term;
 - New terms should be recorded in a project GLOSSARY.md so agents and humans can reference the term rather than re-explain the concept;
 
-## Code Quality
+## Code Quality;
 - Consistency: Rigorously adhere to existing workspace conventions, architectural patterns, and style (naming, formatting, typing, commenting);
 - Prioritize readability, traceability, and maintainability; avoid opaque logic and undocumented workarounds;
 - Modular Isolation: Prefer structuring code into self-contained units that can be modified or completely removed without cascading side effects;
@@ -59,7 +59,7 @@
 - Never inline generic platform facts (e.g., an API's async semantics) -- at most a one-line site-specific pointer, and propose permanent developer-doc updates instead;
 - Parameterization: declare all configurable values as variables at the top of each script;
 
-## Output & Environment
+## Output & Environment;
 - Protocol: When rendering Markdown content within a code block, use the plaintext block type instead of nested triple-backticks.
 - Use line delimiters to separate internal file contents, ensuring the entire multi-file structure is contained within a single code block;
 - Prefer ASCII unless non-ASCII is required.
@@ -71,7 +71,7 @@
   - Use ';' instead of '&&' to chain shell commands in PowerShell;
   - Do not run unix-like commands that aren't built-in to the current shell unless accessing them via C:\Program Files\Git\usr\bin\ or C:\Program Files\Git\mingw64\bin\;
 
-## Maintenance & Consistency
+## Maintenance & Consistency;
 - Stale-reference hunting: when renaming, moving, or deleting anything, grep every document (source, markdown, config) for the old name and update or explicitly justify every reference found;
 - "Fresh-eyes" audit: after a session touching many files, do a consistency pass -- stale references, drift between meta-documents, mismatches between documented contracts and actual code;
 
@@ -83,7 +83,7 @@
 - Configuration: When instructing the user, prefer CLI instructions over GUI;
 - For temporary tool artifacts, prefer scratch or already-ignored paths; do not edit .gitignore unless explicitly asked;
 
-## Rule Conflict Protocol
+## Rule Conflict Protocol;
 - When a user instruction conflicts with an established rule in this file or a companion file (e.g., ARCHITECTURE.md), or when a change would silently add, narrow, defer, or omit material scope:
   1. Stop -- do not silently comply and do not silently override the rule;
   2. Quote the specific rule being violated and the file it appears in;
@@ -101,7 +101,7 @@
 - Documentation-first procedures: when the user requests step-by-step operational instructions, create or update the canonical project guide;
 - Keep the chat response to the outcome and relevant decisions;
 
-# VI. Verification Requirements
+# VI. Verification Requirements;
 - Every agent must define a concrete, failing verification step (automated test, dry-run, manual check, or observable failure condition) *before* proposing any code.
 - Do not state or imply the code works until that verification passes. Never present unverified code as "done" or "working".
 - If the agent cannot run the verification itself, it must explicitly request that the user perform it and report the result; the task remains incomplete until verification succeeds.
@@ -116,7 +116,7 @@
 - Lower-layer tests, code review, or adjacent checks do not prove that boundary.
 - Distinguish passed coverage from pending external evidence; never claim readiness based on a proxy.
 
-# Principle of Least Astonishment
+# Principle of Least Astonishment;
 - Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering.
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises.
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live
