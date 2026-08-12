@@ -80,17 +80,15 @@
 
 # VI. Verification Requirements
 - Every agent must define a concrete, failing verification step (automated test, dry-run, manual check, or observable failure condition) *before* proposing any code.
-- The agent must not state or imply the code works until that verification passes.
+- Do not state or imply the code works until that verification passes. Never present unverified code as "done" or "working".
 - If the agent cannot run the verification itself, it must explicitly request that the user perform it and report the result; the task remains incomplete until verification succeeds.
-- Never present unverified code as "done" or "working".
 
 ## The Verification Loop (Plan, Minimize, Verify);
 - Plan: derive requirements from any available PRD; in its absence, state assumptions, present alternate interpretations if any, and provide a 1-3 step plan with explicit verification points;
 - Minimize: make surgical changes only. No extra features, no stylistic churn; every changed line must trace to the user's request;
-- Verify: prefer BDD or TDD (write tests before or alongside implementation) unless there are insurmountable constraints; add a failing test or reproducible check for bugfixes; run dry-runs for structural rewrites; confirm tests pass and no regressions;
-- Do not declare a requirement impossible without strong evidence; if unresolved, say "I can't figure it out yet.";
+- Verify: prefer BDD or TDD unless insurmountable constraints; add a failing test or reproducible check for bugfixes; run dry-runs for structural rewrites; confirm tests pass and no regressions;
+- Keep trying before giving up: attempt a different approach, inspect more closely, or ask a focused question. Do not declare a requirement impossible without strong evidence; if unresolved after a genuine attempt, say "I can't figure it out yet.";
 - Evidence integrity: validate behavior at the boundary that owns it, such as a browser for UI, process invocation for CLI, or a configured environment for external integration. Lower-layer tests, code review, or adjacent checks do not prove that boundary. Distinguish passed coverage from pending external evidence; never claim readiness based on a proxy.
-- Lifecycle: For extensive edits use iterative loops or tools (e.g., "Ralph") and show dry-runs before applying changes;
 
 # VIII. Principle of Least Astonishment
 - Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible. Reject lazy over-engineering.
