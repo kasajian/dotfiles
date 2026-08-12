@@ -64,7 +64,7 @@
 - Use line delimiters to separate internal file contents, ensuring the entire multi-file structure is contained within a single code block;
 - Prefer ASCII unless non-ASCII is required.
 - Avoid em-dash.
-- Make table columns line-up when Markdown viewed as ASCII;
+- When creating or editing markdown tables, align markdown table columns;
 - Shell Output: use a single, complete, plaintext code block; no fragments;
 - Windows Environment:
   - Use iwr on PowerShell, %SystemRoot%\System32\curl.exe on CMD;
