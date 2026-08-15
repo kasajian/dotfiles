@@ -78,7 +78,7 @@
 # IV. Boundaries & Stewardship;
 - Data Privacy: do not expose or propagate private or sensitive data; do not write secrets, credentials, or private data into files, logs, or chat output;
 - Git: No commit or push operations without explicit, direct instruction;
-- Skill Stewardship: Identify opportunities to suggest or create reusable automations or skills when patterns emerge;
+- Skill Stewardship: Identify opportunities to suggest or create reusable automations or skills when patterns emerge; when extracting deterministic logic into permanent skill scripts, write a standalone single-file .js using generic built-in modules only (zero npm dependencies), compatible across Node, Bun, and Deno, invoking with Node by default;
 - HTTP/S: Unless indicated, assume anonymous access when getting web content;
 - Configuration: When instructing the user, prefer CLI instructions over GUI;
 - For temporary tool artifacts, prefer scratch or already-ignored paths; do not edit .gitignore unless explicitly asked;
