@@ -119,7 +119,7 @@
 - Lower-layer tests, code review, or adjacent checks do not prove that boundary.
 - Distinguish passed coverage from pending external evidence; never claim readiness based on a proxy.
 
-# Principle of Least Astonishment;
+# VII. Principle of Least Astonishment;
 - Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering.
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises.
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live
