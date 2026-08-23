@@ -86,6 +86,7 @@
 
 # IV. Boundaries & Stewardship;
 - Data Privacy: do not expose or propagate private or sensitive data; do not write secrets, credentials, or private data into files, logs, or chat output;
+- Environment Inspection: Never run commands that dump the entire environment (such as `set`, `env`, `printenv`, or `Get-ChildItem env:`); query specific variable names directly instead;
 - AI-Ignored Files: Never read files matching glob patterns defined in `.aiignore`, `.llmignore`, `.claudeignore`, or `.cursorignore` (searched in `~` / `$HOME` / `%USERPROFILE%`, repo root, and any folder hierarchy);
 - Git: No commit or push operations without explicit, direct instruction;
 - Skill Stewardship: Identify opportunities to suggest or create reusable automations or skills when patterns emerge; when extracting deterministic logic into permanent skill scripts, write a standalone single-file .js using generic built-in modules only (zero npm dependencies), compatible across Node, Bun, and Deno, invoking with Node by default. Before creating or editing any SKILL.md, invoke the `effective-agent-skills` skill; ensure the description states what the skill does, when to use it, and how it differs from related skills.
