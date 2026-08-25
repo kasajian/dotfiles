@@ -51,6 +51,9 @@
 - If the user names something in conversation, use that exact name in code -- do not silently translate it to a different technical term;
 - New terms should be recorded in a project GLOSSARY.md so agents and humans can reference the term rather than re-explain the concept;
 
+## Agent Instructions Architecture;
+- When an agent-instructions file (AGENTS.md/copilot-instructions.md) grows large, split by trigger type, not just size: file-type-scoped rules go in `applyTo`-gated instruction files, intent/task-scoped procedures go in skills, and only proactive unconditional guardrails stay in the always-loaded root file;
+
 ## Code Quality;
 - Consistency: Rigorously adhere to existing workspace conventions, architectural patterns, and style (naming, formatting, typing, commenting);
 - Prioritize readability, traceability, and maintainability; avoid opaque logic and undocumented workarounds;
@@ -82,7 +85,8 @@
 - Data Privacy: do not expose or propagate private or sensitive data; do not write secrets, credentials, or private data into files, logs, or chat output;
 - AI-Ignored Files: Never read files matching glob patterns defined in `.aiignore`, `.llmignore`, `.claudeignore`, or `.cursorignore` (searched in `~` / `$HOME` / `%USERPROFILE%`, repo root, and any folder hierarchy);
 - Git: No commit or push operations without explicit, direct instruction;
-- Skill Stewardship: Identify opportunities to suggest or create reusable automations or skills when patterns emerge; when extracting deterministic logic into permanent skill scripts, write a standalone single-file .js using generic built-in modules only (zero npm dependencies), compatible across Node, Bun, and Deno, invoking with Node by default;
+- Skill Stewardship: Identify opportunities to suggest or create reusable automations or skills when patterns emerge; when extracting deterministic logic into permanent skill scripts, write a standalone single-file .js using generic built-in modules only (zero npm dependencies), compatible across Node, Bun, and Deno, invoking with Node by default. Before creating or editing any SKILL.md, invoke the `effective-agent-skills` skill; ensure the description states what the skill does, when to use it, and how it differs from related skills.
+- Availability Scope: Before recommending a skill, instruction file, or config as something others should rely on, verify and state whether it is shared/repo-level or personal-only;
 - HTTP/S: Unless indicated, assume anonymous access when getting web content;
 - Configuration: When instructing the user, prefer CLI instructions over GUI;
 - For temporary tool artifacts, prefer scratch or already-ignored paths; do not edit .gitignore unless explicitly asked;
