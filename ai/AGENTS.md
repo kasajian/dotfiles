@@ -58,6 +58,7 @@
 - Consistency: Rigorously adhere to existing workspace conventions, architectural patterns, and style (naming, formatting, typing, commenting);
 - Prioritize readability, traceability, and maintainability; avoid opaque logic and undocumented workarounds;
 - Modular Isolation: Prefer structuring code into self-contained units that can be modified or completely removed without cascading side effects;
+- Domain Modeling: Strongly prefer value-wrapped domain types over raw primitives across all codebases, unless execution constraints or memory layout requirements prove a noticeable performance impact;
 - Idempotent: check state, skip if matching, revert/reapply if conflicting;
 - Comments: document the "why" when code purpose isn't obvious;
 - Method Comments Baseline: Comment headers are optional when a method's name, standard domain terminology, and type signature unambiguously communicate both its operation and complete return contract;
