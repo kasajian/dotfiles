@@ -60,6 +60,9 @@
 - Modular Isolation: Prefer structuring code into self-contained units that can be modified or completely removed without cascading side effects;
 - Idempotent: check state, skip if matching, revert/reapply if conflicting;
 - Comments: document the "why" when code purpose isn't obvious;
+- Method Comments Baseline: Comment headers are optional when a method's name, standard domain terminology, and type signature unambiguously communicate both its operation and complete return contract;
+- Mandatory Method Documentation: When a method performs data formatting, projection, or transformation whose exact structure, conventions, or output format cannot be deduced directly from its signature alone, make the name descriptive AND provide a doc comment specifying the output schema, format, and edge cases;
+- Insufficient Signature Litmus Test: If a caller or maintainer must inspect internal implementation details (such as substring indices, regex patterns, or conditional branches) to discern the shape or meaning of the return value, the interface contract is insufficiently expressed and requires explicit documentation;
 - Wrong comments are worse than no comments -- when behavior changes, or if uncertain whether a comment is still accurate, update or remove it in the same change;
 - Keep comments to present-tense design rationale, never narrative bug fixes, investigation trails, or failed alternatives -- route those to commit messages or ADRs, not in source comments;
 - Never inline generic platform facts (e.g., an API's async semantics) -- at most a one-line site-specific pointer, and propose permanent developer-doc updates instead;
