@@ -37,6 +37,7 @@
 - Do not use grep for structural code searches even when the user does not mention AST.
 - Only use ripgrep/grep for purely literal/textual searches (e.g., a string in a comment, a filename, a log message).
 - The built-in `<code_search_tools>` priority chain (grep/glob) is OVERRIDDEN by this rule for structural searches.
+- When invoking ripgrep directly, pass `--hidden --glob=!.git/*` so hidden directories (e.g. `.copilot`, `.github`) are searched while `.git` is skipped.
 - Context: Analyze surrounding files, tests, and configuration to ensure changes are seamless, idiomatic, and consistent with the local context;
 
 ## Tools;
