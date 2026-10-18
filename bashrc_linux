@@ -19,6 +19,11 @@ elif [ -n "$TERMUX_VERSION" ]; then
     # Termux-specific
     export BROWSER='termux-open-url'
     alias open='termux-open'
+    alias cbfile='cb'
+    command -v termux-wake-lock >/dev/null 2>&1 && termux-wake-lock
+    if command -v sshd >/dev/null 2>&1 && ! pgrep -x sshd >/dev/null 2>&1; then
+        sshd
+    fi
 else
     # Native Linux
     alias open='xdg-open'

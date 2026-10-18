@@ -53,7 +53,11 @@ export CLICOLOR=1
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 
 # --- ls Aliases (universal) ---
-alias ls='ls --color=auto 2>/dev/null || ls -G'
+if command ls --color=auto /dev/null >/dev/null 2>&1; then
+    alias ls='ls --color=auto'
+else
+    alias ls='ls -G'
+fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
