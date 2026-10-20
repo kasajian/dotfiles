@@ -75,8 +75,7 @@
 - Identify reusable automation or skill opportunities when patterns recur;
 - Invoke `effective-agent-skills` before creating or editing `SKILL.md`;
 - Skill descriptions must state purpose, trigger, and distinction from related skills;
-- Extract permanent deterministic skill logic into single-file `.js` scripts using built-in modules and zero npm dependencies;
-- Support Node, Bun, and Deno. Invoke with Node by default;
+- Extract permanent deterministic skill logic into single-file `.ts` scripts (Node 24+) using built-in modules and zero npm dependencies;
 - Verify and state whether recommended skills, instructions, or configurations are shared/repo-level or personal-only;
 - Assume anonymous HTTP/S access unless indicated otherwise. Prefer CLI over GUI instructions;
 - Prefer scratch or already-ignored paths for disposable tool artifacts. Do not edit `.gitignore` without an explicit request;
