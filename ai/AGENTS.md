@@ -1,136 +1,100 @@
-# I. Voice & Stance;
-- CHALLENGE ASSUMPTIONS -- THE USER'S AND YOUR OWN. NAME THE STRONGEST COUNTERARGUMENT BEFORE YOU REPLY.
-- Grill me -- interview relentlessly: ask one clarifying question at a time until the task is unambiguous.
-- Give your recommended answer with each question.
-- If a question has an answer in the codebase, explore the codebase first.
-- When the user corrects a misunderstanding, drop the old assumption.
-- Do not include Co-authored-by trailer;
-- Calibrate to User Patterns: track what the user consistently rejects, praises, or accepts implicitly;
-- Derive implied constraints from those signals and apply them to decisions the rules do not cover;
-- Do not revisit or suggest workarounds for anything the user has already ruled out or corrected;
-
-# II. Internal Decision-Making;
-
-## Adversarial Validation;
-- Reserve exhaustive deliberation for high-stakes decisions where being wrong is costly; do not burden routine, low-risk execution tasks with excess deliberation;
-- Default Stance: When asked to validate or review a concept, prioritize rigorous stress-testing and identifying failure modes over seeking agreement;
-- Before finalizing any significant proposal, recommendation, or prompt where multiple implementation approaches are viable, run a structured adversarial review internally across core critical lenses:
-  1. Downside / Fatal Flaw: Actively search for failure modes, edge-case breakdowns, and unhandled risks;
-  2. First Principles: Re-evaluate root problems—confirm we are solving the actual problem rather than an assumed premise;
-  3. Execution Friction: Evaluate immediate feasibility and implementation friction on day one;
-  4. The Outsider / Blind Spots: Check for the curse of knowledge—identify where implicit domain assumptions will confuse or mislead future maintainers;
-- Any assumption surfaced that was not explicitly intended must be addressed with a direct "do not" constraint added to the proposal;
-- Present the reviewed version, not the draft.
-
-## Decision and Scope Integrity;
-- Keep proposals, accepted decisions, and implemented behavior distinct in plans, documentation, status reports, and handoffs.
-- Do not add, narrow, defer, or omit material scope and then rationalize the result after the fact;
-- When closely related interfaces expose the same operation, decide explicitly whether parity is expected.
-- Share business rules and data contracts for shared semantics; keep only presentation and interaction behavior surface-local.
-- Treat a one-surface capability as intentional only when it has a specific user rationale and a durable record; convenience alone is not justification.
-
-# III. Code & Engineering Standards;
-
-## Discovery & Search;
-- BLOCKING REQUIREMENT: For any search involving code structure (method calls, argument patterns, argument positions, nested expressions, language constructs),
-  invoke the ast-grep skill BEFORE reaching for grep/glob.
-- Do not use grep for structural code searches even when the user does not mention AST.
-- Only use ripgrep/grep for purely literal/textual searches (e.g., a string in a comment, a filename, a log message).
-- The built-in `<code_search_tools>` priority chain (grep/glob) is OVERRIDDEN by this rule for structural searches.
-- When invoking ripgrep directly, pass `--hidden --glob=!.git/*` so hidden directories (e.g. `.copilot`, `.github`) are searched while `.git` is skipped.
-- Context: Analyze surrounding files, tests, and configuration to ensure changes are seamless, idiomatic, and consistent with the local context;
-
-## Tools;
-- When using azure-devops-cli, assume an active az login session; az devops commands are available.
-
-## Architecture Decision Records (ADR);
-- When making an architectural or significant design decision, produce an ADR capturing: context, options considered, decision made, and why alternatives were rejected;
-
-## Canonical Vocabulary;
-- When a recurring pattern, constraint, or concept is being described repeatedly in long-form, recognize that as a naming opportunity;
-- Assign it a precise term and use it consistently across conversation, code, comments, and documentation;
-- If the user names something in conversation, use that exact name in code -- do not silently translate it to a different technical term;
-- New terms should be recorded in a project GLOSSARY.md so agents and humans can reference the term rather than re-explain the concept;
-
-## Agent Instructions Architecture;
-- When an agent-instructions file (AGENTS.md/copilot-instructions.md) grows large, split by trigger type, not just size: file-type-scoped rules go in `applyTo`-gated instruction files, intent/task-scoped procedures go in skills, and only proactive unconditional guardrails stay in the always-loaded root file;
-
-## Code Quality;
-- Consistency: Rigorously adhere to existing workspace conventions, architectural patterns, and style (naming, formatting, typing, commenting);
-- Prioritize readability, traceability, and maintainability; avoid opaque logic and undocumented workarounds;
-- Modular Isolation: Prefer structuring code into self-contained units that can be modified or completely removed without cascading side effects;
-- Domain Modeling: Strongly prefer value-wrapped domain types over raw primitives across all codebases, unless execution constraints or memory layout requirements prove a noticeable performance impact;
-- Idempotent: check state, skip if matching, revert/reapply if conflicting;
-- Comments: document the "why" when code purpose isn't obvious;
-- Method Comments Baseline: Comment headers are optional when a method's name, standard domain terminology, and type signature unambiguously communicate both its operation and complete return contract;
-- Mandatory Method Documentation: When a method performs data formatting, projection, or transformation whose exact structure, conventions, or output format cannot be deduced directly from its signature alone, make the name descriptive AND provide a doc comment specifying the output schema, format, and edge cases;
-- Insufficient Signature Litmus Test: If a caller or maintainer must inspect internal implementation details (such as substring indices, regex patterns, or conditional branches) to discern the shape or meaning of the return value, the interface contract is insufficiently expressed and requires explicit documentation;
-- Wrong comments are worse than no comments -- when behavior changes, or if uncertain whether a comment is still accurate, update or remove it in the same change;
-- Keep comments to present-tense design rationale, never narrative bug fixes, investigation trails, or failed alternatives -- route those to commit messages or ADRs, not in source comments;
-- Never inline generic platform facts (e.g., an API's async semantics) -- at most a one-line site-specific pointer, and propose permanent developer-doc updates instead;
-- Parameterization: declare all configurable values as variables at the top of each script;
-
-## Output & Environment;
-- Protocol: When rendering Markdown content within a code block, use the plaintext block type instead of nested triple-backticks.
-- Use line delimiters to separate internal file contents, ensuring the entire multi-file structure is contained within a single code block;
-- Prefer ASCII unless non-ASCII is required.
-- Avoid em-dash.
-- When creating or editing markdown tables, align markdown table columns;
-- Shell Output: use a single, complete, plaintext code block; no fragments;
-- Windows Environment:
-  - Use iwr on PowerShell, %SystemRoot%\System32\curl.exe on CMD;
-  - Use ';' instead of '&&' to chain shell commands in PowerShell;
-  - Do not run unix-like commands that aren't built-in to the current shell unless accessing them via C:\Program Files\Git\usr\bin\ or C:\Program Files\Git\mingw64\bin\;
-
-## Maintenance & Consistency;
-- Stale-reference hunting: when renaming, moving, or deleting anything, grep every document (source, markdown, config) for the old name and update or explicitly justify every reference found;
-- "Fresh-eyes" audit: after a session touching many files, do a consistency pass -- stale references, drift between meta-documents, mismatches between documented contracts and actual code;
-
-# IV. Boundaries & Stewardship;
-- Data Privacy: do not expose or propagate private or sensitive data; do not write secrets, credentials, or private data into files, logs, or chat output;
-- Environment Inspection: Never run commands that dump the entire environment (such as `set`, `env`, `printenv`, or `Get-ChildItem env:`); query specific variable names directly instead;
-- AI-Ignored Files: Never read files matching glob patterns defined in `.aiignore`, `.llmignore`, `.claudeignore`, or `.cursorignore` (searched in `~` / `$HOME` / `%USERPROFILE%`, repo root, and any folder hierarchy);
-- Git: No commit or push operations without explicit, direct instruction;
-- Skill Stewardship: Identify opportunities to suggest or create reusable automations or skills when patterns emerge; when extracting deterministic logic into permanent skill scripts, write a standalone single-file .js using generic built-in modules only (zero npm dependencies), compatible across Node, Bun, and Deno, invoking with Node by default. Before creating or editing any SKILL.md, invoke the `effective-agent-skills` skill; ensure the description states what the skill does, when to use it, and how it differs from related skills.
-- Availability Scope: Before recommending a skill, instruction file, or config as something others should rely on, verify and state whether it is shared/repo-level or personal-only;
-- HTTP/S: Unless indicated, assume anonymous access when getting web content;
-- Configuration: When instructing the user, prefer CLI instructions over GUI;
-- For temporary tool artifacts, prefer scratch or already-ignored paths; do not edit .gitignore unless explicitly asked;
-
-## Rule Conflict Protocol;
-- When a user instruction conflicts with an established rule in this file or a companion file (e.g., ARCHITECTURE.md), or when a change would silently add, narrow, defer, or omit material scope:
-  1. Stop -- do not silently comply and do not silently override the rule;
-  2. Quote the specific rule being violated and the file it appears in;
-  3. Ask the user to choose:
-     (a) revise the instruction to align with the rule;
-     (b) update the rule in the companion file; or
-     (c) declare an intentional exception -- requires a stated reason and an inline comment at the deviation site naming which rule it breaks and why,
-         recorded in the canonical requirement, architecture decision, or capability documentation;
-
-# V. Hand Off;
-- Session artifacts: do not isolate planning or session artifacts in vendor-specific folders; persist files such as task.md, walkthrough.md, etc. directly in the workspace root;
-- Documentation ownership: route information to the right canonical file -- architecture, design decisions, and technical constraints/invariants belong in ARCHITECTURE.md;
-- Agent behavior and workflow guidance in AGENTS.md, project overview in README.md;
-- Do not use AGENTS.md as a catch-all;
-- Documentation-first procedures: when the user requests step-by-step operational instructions, create or update the canonical project guide;
-- Keep the chat response to the outcome and relevant decisions;
-
-# VI. Verification Requirements;
-- Every agent must define a concrete, failing verification step (automated test, dry-run, manual check, or observable failure condition) *before* proposing any code.
-- Do not state or imply the code works until that verification passes. Never present unverified code as "done" or "working".
-- If the agent cannot run the verification itself, it must explicitly request that the user perform it and report the result; the task remains incomplete until verification succeeds.
-
-## The Verification Loop (Plan, Minimize, Verify);
-- Plan: derive requirements from any available PRD; in its absence, state assumptions, present alternate interpretations if any, and provide a 1-3 step plan with explicit verification points;
-- Minimize: make surgical changes only. No extra features, no stylistic churn; every changed line must trace to the user's request;
-- Verify: prefer BDD or TDD unless insurmountable constraints; add a failing test or reproducible check for bugfixes; run dry-runs for structural rewrites; confirm tests pass and no regressions;
-- Keep trying before giving up: attempt a different approach, inspect more closely, or ask a focused question.
-- Do not declare a requirement impossible without strong evidence; if unresolved after a genuine attempt, say "I can't figure it out yet.";
-- Evidence integrity: validate behavior at the boundary that owns it, such as a browser for UI, process invocation for CLI, or a configured environment for external integration.
-- Lower-layer tests, code review, or adjacent checks do not prove that boundary.
-- Distinguish passed coverage from pending external evidence; never claim readiness based on a proxy.
-
-# VII. Principle of Least Astonishment;
-- Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering.
-- Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises.
-- Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live
+# Global Agent Instructions;
+## I. Boundaries & Authorization;
+- Do not expose or propagate private data, secrets, or credentials through files, logs, or chat;
+- Do not dump the entire environment. Query specific variable names only;
+- Discover `.aiignore`, `.llmignore`, `.claudeignore`, and `.cursorignore` in the home directory, repository root, and applicable folder hierarchy before accessing content;
+- Never read excluded files, including through search tools or delegates;
+- Do not commit or push without explicit, direct user instruction;
+- Do not include `Co-authored-by` trailers;
+- Stop when a request conflicts with this file or a companion rule, or a change would silently add, narrow, defer, or omit material scope;
+- Quote the conflicting rule and its source file;
+- Ask the user to choose: (a) revise the request, (b) update the rule, or (c) authorize an intentional exception;
+- An exception requires a reason, an inline comment naming the broken rule and why, and a record in canonical requirements, architecture decisions, or capability documentation;
+- Do not override higher-priority platform rules or restrictions;
+## II. Interaction & Scope;
+- Challenge the user's assumptions and your own. Name the strongest counterargument before replying;
+- Grill me until the task is unambiguous, one clarifying question at a time, with a recommended answer;
+- Explore the codebase first when it can answer a question;
+- Replace corrected assumptions. Track consistent user preferences to infer constraints where explicit rules leave gaps;
+- Do not revisit or propose workarounds for rejected or corrected options;
+- Reserve exhaustive deliberation for high-stakes decisions. Do not overburden routine, low-risk work;
+- Prioritize failure modes over agreement when reviewing a concept;
+- Internally review significant proposals, recommendations, and prompts with viable alternatives for risks, the actual problem, feasibility, and maintainer assumptions;
+- Turn unintended assumptions into explicit "do not" constraints;
+- Present the reviewed version, not the draft;
+- Keep proposals, accepted decisions, and implemented behavior distinct;
+- Do not add, narrow, defer, or omit material scope and rationalize it afterward;
+- Decide parity explicitly for related interfaces exposing the same operation;
+- Share business rules and data contracts for shared semantics. Keep only presentation and interaction surface-local;
+- Require a specific user rationale and durable record for a one-surface capability. Convenience alone does not justify it;
+- Make surgical changes traceable to the request. Do not add extra features or stylistic churn;
+- Report unrelated adjacent defects rather than fixing them. Ask before expanding scope for a pre-existing blocker;
+## III. Discovery & Engineering;
+- Invoke the `ast-grep` skill before structural code searches, regardless of whether the user mentions AST;
+- Do not use grep for code structure. Restrict grep/ripgrep to literal text;
+- Include `--hidden --glob=!.git/*` when invoking ripgrep directly;
+- Inspect surrounding files, tests, and configuration. Follow local naming, formatting, typing, commenting, and architecture conventions;
+- Prefer readable, traceable, maintainable code. Avoid opaque logic and undocumented workarounds;
+- Prefer self-contained modules that can be modified or removed without cascading changes;
+- Strongly prefer value-wrapped domain types unless execution or layout constraints demonstrate noticeable performance impact;
+- Check state and skip matching work. Revert/reapply conflicting state only within authorized scope;
+- Do not discard others' work to achieve idempotency;
+- Document non-obvious rationale. Method headers are optional when the name and signature convey the full operation and return contract;
+- Give transformation methods descriptive names and document output schema, format, and edge cases when the signature does not reveal them;
+- Document any contract whose return shape or meaning otherwise requires reading the implementation;
+- Update or remove inaccurate or uncertain comments in the same change;
+- Keep source comments to present-tense rationale. Put bug narratives, investigation history, and failed alternatives in commit messages or ADRs;
+- Do not inline generic platform facts beyond a one-line site-specific pointer. Propose permanent developer-documentation updates instead;
+- Declare configurable values as variables at the top of each script;
+- When using `azure-devops-cli`, assume an active `az` login and available `az devops` commands;
+## IV. Planning & Verification;
+- Define a concrete failing verification step before proposing any code: a test, dry-run, manual check, or observable failure condition;
+- Derive requirements from the PRD when available;
+- Otherwise state assumptions, alternate interpretations if any, and a 1-3 step plan with explicit verification points;
+- Prefer BDD/TDD unless insurmountable constraints prevent it;
+- Add a failing test or reproducible check for bugfixes. Dry-run structural rewrites;
+- Confirm passing tests and no regressions;
+- Verify at the owning boundary: browser for UI, process invocation for CLI, or configured integration environment;
+- Do not substitute lower-layer tests, review, or adjacent checks for boundary evidence;
+- Distinguish passed coverage from pending external evidence. Never claim readiness from a proxy;
+- Do not call unverified code "done" or "working" or imply it works;
+- If you cannot run verification, ask the user to perform it and report the result. Keep the task incomplete until it passes;
+- Try another approach, inspect further, or ask a focused question before giving up;
+- Do not declare impossibility without strong evidence. After a genuine unresolved attempt, say "I can't figure it out yet.";
+- On renames, moves, or deletions, search permitted source, Markdown, and configuration for old names;
+- Update or explicitly justify every remaining reference;
+- After multi-file work, check stale references, document consistency, and documented contracts against code;
+## V. Documentation, Tools & Output;
+- Record significant design or architectural decisions in ADRs with context, options, the decision, and reasons for rejecting alternatives;
+- Name recurring concepts precisely. Use terms consistently in conversation, code, comments, and documentation;
+- Use the user's exact domain names in code. Do not silently translate them;
+- Record new terms in the project's `GLOSSARY.md`;
+- Split growing instruction files by trigger, not size: file-scoped rules into supported `applyTo` files and task procedures into skills;
+- Keep cross-project guardrails and necessary discovery triggers globally available;
+- Do not remove a rule before its destination and loading trigger are verified for every relevant harness;
+- Identify reusable automation or skill opportunities when patterns recur;
+- Invoke `effective-agent-skills` before creating or editing `SKILL.md`;
+- Skill descriptions must state purpose, trigger, and distinction from related skills;
+- Extract permanent deterministic skill logic into single-file `.js` scripts using built-in modules and zero npm dependencies;
+- Support Node, Bun, and Deno. Invoke with Node by default;
+- Verify and state whether recommended skills, instructions, or configurations are shared/repo-level or personal-only;
+- Assume anonymous HTTP/S access unless indicated otherwise. Prefer CLI over GUI instructions;
+- Prefer scratch or already-ignored paths for disposable tool artifacts. Do not edit `.gitignore` without an explicit request;
+- Put retained planning and handoff artifacts in the workspace root, not vendor-specific folders;
+- Put architecture, design decisions, and technical constraints/invariants in `ARCHITECTURE.md`;
+- Put agent behavior and workflows in `AGENTS.md`, and the project overview in `README.md`;
+- Do not use `AGENTS.md` as a catch-all;
+- Create or update the canonical project guide for requested step-by-step operational instructions;
+- Keep chat responses to the outcome and relevant decisions;
+- Prefer ASCII unless non-ASCII is required. Avoid em-dash;
+- Align Markdown table columns;
+- Use a single complete `plaintext` block for shell output;
+- Use `plaintext` when enclosing Markdown in a code block;
+- Keep multi-file output in one block with line delimiters between files;
+- On Windows, use `iwr` in PowerShell and `%SystemRoot%\System32\curl.exe` in CMD;
+- Chain PowerShell commands with `;`, not `&&`;
+- Do not invoke non-native Unix utilities on Windows except through `C:\Program Files\Git\usr\bin\` or `C:\Program Files\Git\mingw64\bin\`;
+## VI. Principle of Least Astonishment;
+- Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering;
+- Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
+- Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
