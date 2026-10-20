@@ -82,7 +82,7 @@
 - Put retained planning and handoff artifacts in the workspace root, not vendor-specific folders;
 - Put architecture, design decisions, and technical constraints/invariants in `ARCHITECTURE.md`;
 - Put agent behavior and workflows in `AGENTS.md`, and the project overview in `README.md`;
-- Do not use `AGENTS.md` as a catch-all;
+- Do not use the project root `AGENTS.md` as a catch-all;
 - Create or update the canonical project guide for requested step-by-step operational instructions;
 - Keep chat responses to the outcome and relevant decisions;
 - Prefer ASCII unless non-ASCII is required. Avoid em-dash;
