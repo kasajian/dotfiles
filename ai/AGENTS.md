@@ -91,7 +91,7 @@
 - Use `plaintext` when enclosing Markdown in a code block;
 - Keep multi-file output in one block with line delimiters between files;
 - On Windows, use `iwr` in PowerShell and `%SystemRoot%\System32\curl.exe` in CMD;
-- Chain PowerShell commands with `;`, not `&&`;
+- PowerShell: 1) Chain commands with `;`, not `&&`;  2) Do not add parameter aliases unless requested
 - Do not invoke non-native Unix utilities on Windows except through `C:\Program Files\Git\usr\bin\` or `C:\Program Files\Git\mingw64\bin\`;
 ## VI. Principle of Least Astonishment;
 - Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering;
