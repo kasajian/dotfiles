@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ============================================================
 # bootstrap.sh — One-command dotfiles setup
-# Detects OS, checks prerequisites, symlinks everything
+# Detects OS, checks prerequisites, links .vimrc, wires ~/.bashrc to source dotfiles
 # Idempotent: safe to run repeatedly
 # ============================================================
 
@@ -65,16 +65,25 @@ popd > /dev/null
 rm -f ~/.vimrc
 ln -sf "$DOTFILES_DIR/.vimrc" ~/.vimrc
 
-# --- Symlink bashrc ---
+# --- Local ~/.bashrc (a real file, never a symlink) ---
+# ~/.bashrc is machine-local. It only needs to source the dotfiles entry point.
+# Existing local content is preserved; the source line is added once.
 if [ "$OS" = "Darwin" ]; then
-    BASHRC_SRC="$DOTFILES_DIR/bashrc_macos"
+    BASHRC_NAME="bashrc_macos"
 elif [ "$OS" = "Linux" ]; then
-    BASHRC_SRC="$DOTFILES_DIR/bashrc_linux"
+    BASHRC_NAME="bashrc_linux"
 fi
 
-if [ -n "$BASHRC_SRC" ]; then
-    rm -f ~/.bashrc
-    ln -sf "$BASHRC_SRC" ~/.bashrc
+if [ -n "$BASHRC_NAME" ]; then
+    if ! grep -qs "dotfiles/$BASHRC_NAME" ~/.bashrc; then
+        {
+            echo "# Shared dotfiles (machine-specific settings go below this line)"
+            echo "[ -f ~/dotfiles/$BASHRC_NAME ] && . ~/dotfiles/$BASHRC_NAME"
+            echo ""
+        } > ~/.bashrc.new
+        [ -f ~/.bashrc ] && cat ~/.bashrc >> ~/.bashrc.new
+        mv ~/.bashrc.new ~/.bashrc
+    fi
 fi
 
 # --- Summary ---

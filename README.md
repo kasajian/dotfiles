@@ -26,6 +26,7 @@ git clone https://github.com/kasajian/dotfiles.git $env:USERPROFILE\dotfiles; & 
 | Bash (shared) | `bashrc` — aliases, history, colors, NVM, fzf, git completions |
 | Bash (macOS) | `bashrc_macos` — Homebrew + bash-completion@2 |
 | Bash (Linux) | `bashrc_linux` — WSL/Termux detection |
+| Local `~/.bashrc` | Not in repo. Created by bootstrap; sources the file above. Put machine-specific aliases/PATH/tool installers here |
 | macOS Brewfile | `Brewfile` — one-shot dev tool install |
 | Git config | `git_config/` — `core.sh`, `diff_win_config.sh`, `edit_exe.sh`, `username_git_config.sh` |
 

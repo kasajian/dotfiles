@@ -1,6 +1,7 @@
 # ============================================================
 # bashrc_macos — macOS entry point
-# Symlink or source this from ~/.bashrc or ~/.bash_profile
+# Source this from ~/.bashrc or ~/.bash_profile (do NOT symlink it).
+# Put machine-specific settings in the local file, after the source line.
 # ============================================================
 
 # Source system-wide bashrc
