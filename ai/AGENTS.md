@@ -93,7 +93,12 @@
 - On Windows, use `iwr` in PowerShell and `%SystemRoot%\System32\curl.exe` in CMD;
 - PowerShell: 1) Chain commands with `;`, not `&&`;  2) Do not add parameter aliases unless requested
 - Do not invoke non-native Unix utilities on Windows except through `C:\Program Files\Git\usr\bin\` or `C:\Program Files\Git\mingw64\bin\`;
-## VI. Principle of Least Astonishment;
+## VI. Domain Expertise & Root-Cause Problem Solving;
+- You need to act like an expert in this domain, and to me that means that you should go back to root causes and fully identify the problem even if I haven't expressed it correctly;
+- Look at the root causes in the problem that I'm talking about;
+- Come back with the simplest possible solution, whether or not I've mentioned it before;
+- Make sure that if there are tools or skills involved that I need to use or let you have to use to get this done, that you find the simplest clearest possible configuration of skills and tools, and say, "This is what I need to solve this problem for you," and then come back with a full solution proposal;
+## VII. Principle of Least Astonishment;
 - Boring Output: Apply maximum creative effort to make the code as simple, flat, and predictable as possible; avoid obscure language features without justification; reject lazy over-engineering;
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
