@@ -15,6 +15,9 @@ esac
 # git config --global core.editor C:/tools/vim/vim90/gvim.exe
 git config --global difftool.prompt false
 
+# Notepad++
+git config --global core.editor "notepad++.exe -multiInst -notabbar -nosession -noPlugin"
+
 # Primary diff tool: WinMerge
 git config --global diff.tool winmerge
 git config --global difftool.winmerge.cmd 'WinMergeU.exe -r -u -dl Local -dr Remote """$LOCAL""" """$REMOTE"""'
