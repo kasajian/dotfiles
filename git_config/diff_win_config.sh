@@ -16,7 +16,7 @@ esac
 git config --global difftool.prompt false
 
 # Notepad++
-git config --global core.editor "notepad++.exe -multiInst -notabbar -nosession -noPlugin"
+git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
 
 # Primary diff tool: WinMerge
 git config --global diff.tool winmerge
