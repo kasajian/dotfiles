@@ -3,17 +3,25 @@
 # Works on: macOS, Linux, WSL (Ubuntu), Termux
 # ============================================================
 
-# --- Shell Options ---
-shopt -s histappend              # Append to history, don't overwrite
-shopt -s checkwinsize            # Update LINES/COLUMNS after each command
-shopt -s cdspell                 # Auto-correct minor typos in cd
-shopt -s globstar 2>/dev/null    # Enable ** recursive globbing (bash 4+)
-
-# --- History ---
+# --- Shell Options & History ---
 export HISTSIZE=32768
 export HISTFILESIZE="${HISTSIZE}"
-export HISTCONTROL='ignoreboth'  # Ignore duplicates and lines starting with space
-export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S  '
+export SAVEHIST="${HISTSIZE}"
+
+if [ -n "$BASH_VERSION" ]; then
+    shopt -s histappend              # Append to history, don't overwrite
+    shopt -s checkwinsize            # Update LINES/COLUMNS after each command
+    shopt -s cdspell                 # Auto-correct minor typos in cd
+    shopt -s globstar 2>/dev/null    # Enable ** recursive globbing (bash 4+)
+    export HISTCONTROL='ignoreboth'  # Ignore duplicates and lines starting with space
+    export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S  '
+elif [ -n "$ZSH_VERSION" ]; then
+    setopt APPEND_HISTORY
+    setopt INC_APPEND_HISTORY
+    setopt HIST_IGNORE_DUPS
+    setopt HIST_IGNORE_SPACE
+    setopt EXTENDED_HISTORY
+fi
 
 # --- Editor ---
 export EDITOR='vim'
@@ -36,10 +44,17 @@ add_to_path_front "$HOME/bin"
 stty -ixon 2>/dev/null
 
 # --- History Search with Arrow Keys ---
-bind '"\e[A": history-search-backward' 2>/dev/null
-bind '"\e[B": history-search-forward'  2>/dev/null
-bind '"\eOA": history-search-backward' 2>/dev/null
-bind '"\eOB": history-search-forward'  2>/dev/null
+if [ -n "$BASH_VERSION" ]; then
+    bind '"\e[A": history-search-backward' 2>/dev/null
+    bind '"\e[B": history-search-forward'  2>/dev/null
+    bind '"\eOA": history-search-backward' 2>/dev/null
+    bind '"\eOB": history-search-forward'  2>/dev/null
+elif [ -n "$ZSH_VERSION" ]; then
+    bindkey '^[[A' history-beginning-search-backward 2>/dev/null
+    bindkey '^[[B' history-beginning-search-forward  2>/dev/null
+    bindkey '^[OA' history-beginning-search-backward 2>/dev/null
+    bindkey '^[OB' history-beginning-search-forward  2>/dev/null
+fi
 
 # --- Language / Locale ---
 export LANG='en_US.UTF-8'
@@ -69,14 +84,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# --- Git Aliases ---
-alias gs='git status'
-alias gl='git log --oneline --graph --all'
-alias gd='git diff'
-alias gco='git checkout'
-alias gb='git branch'
-alias gp='git pull'
-
 # --- Less Colors ---
 export LESS='-R'
 export LESS_TERMCAP_mb=$'\e[1;31m'
@@ -97,27 +104,45 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # --- Git Completion ---
-# Usually auto-loaded by bash-completion; this is a fallback
-if ! type -t __git_complete &>/dev/null; then
-    for f in /usr/share/bash-completion/completions/git \
-             /opt/homebrew/etc/bash_completion.d/git-completion.bash \
-             /usr/local/etc/bash_completion.d/git-completion.bash \
-             /etc/bash_completion.d/git-completion.bash; do
-        [ -f "$f" ] && { . "$f"; break; }
-    done
+if [ -n "$BASH_VERSION" ]; then
+    # Usually auto-loaded by bash-completion; this is a fallback
+    if ! type -t __git_complete &>/dev/null; then
+        for f in /usr/share/bash-completion/completions/git \
+                 /opt/homebrew/etc/bash_completion.d/git-completion.bash \
+                 /usr/local/etc/bash_completion.d/git-completion.bash \
+                 /etc/bash_completion.d/git-completion.bash; do
+            [ -f "$f" ] && { . "$f"; break; }
+        done
+    fi
+elif [ -n "$ZSH_VERSION" ]; then
+    if ! command -v compdef >/dev/null 2>&1; then
+        autoload -Uz compinit && compinit -u 2>/dev/null
+    fi
 fi
 
 # --- fzf (Fuzzy Finder) ---
 # Ctrl+R: fuzzy history   Ctrl+T: fuzzy file finder   Alt+C: fuzzy cd
 # **<TAB>: fuzzy path completion
-if [ -f ~/.fzf.bash ]; then
-    . ~/.fzf.bash
-elif [ -f /opt/homebrew/opt/fzf/shell/key-bindings.bash ]; then
-    . /opt/homebrew/opt/fzf/shell/key-bindings.bash
-    [ -f /opt/homebrew/opt/fzf/shell/completion.bash ] && . /opt/homebrew/opt/fzf/shell/completion.bash
-elif [ -f /usr/local/opt/fzf/shell/key-bindings.bash ]; then
-    . /usr/local/opt/fzf/shell/key-bindings.bash
-    [ -f /usr/local/opt/fzf/shell/completion.bash ] && . /usr/local/opt/fzf/shell/completion.bash
+if [ -n "$BASH_VERSION" ]; then
+    if [ -f ~/.fzf.bash ]; then
+        . ~/.fzf.bash
+    elif [ -f /opt/homebrew/opt/fzf/shell/key-bindings.bash ]; then
+        . /opt/homebrew/opt/fzf/shell/key-bindings.bash
+        [ -f /opt/homebrew/opt/fzf/shell/completion.bash ] && . /opt/homebrew/opt/fzf/shell/completion.bash
+    elif [ -f /usr/local/opt/fzf/shell/key-bindings.bash ]; then
+        . /usr/local/opt/fzf/shell/key-bindings.bash
+        [ -f /usr/local/opt/fzf/shell/completion.bash ] && . /usr/local/opt/fzf/shell/completion.bash
+    fi
+elif [ -n "$ZSH_VERSION" ]; then
+    if [ -f ~/.fzf.zsh ]; then
+        . ~/.fzf.zsh
+    elif [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
+        . /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+        [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && . /opt/homebrew/opt/fzf/shell/completion.zsh
+    elif [ -f /usr/local/opt/fzf/shell/key-bindings.zsh ]; then
+        . /usr/local/opt/fzf/shell/key-bindings.zsh
+        [ -f /usr/local/opt/fzf/shell/completion.zsh ] && . /usr/local/opt/fzf/shell/completion.zsh
+    fi
 fi
 
 # --- Source private/local overrides (secrets, machine-specific) ---

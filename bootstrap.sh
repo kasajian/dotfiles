@@ -65,32 +65,40 @@ popd > /dev/null
 rm -f ~/.vimrc
 ln -sf "$DOTFILES_DIR/.vimrc" ~/.vimrc
 
-# --- Local ~/.bashrc (a real file, never a symlink) ---
-# ~/.bashrc is machine-local. It only needs to source the dotfiles entry point.
+# --- Local ~/.bashrc / ~/.zshrc (real files, never symlinks) ---
+# ~/.bashrc and ~/.zshrc are machine-local. They only need to source the dotfiles entry point.
 # Existing local content is preserved; the source line is added once.
-if [ "$OS" = "Darwin" ]; then
-    BASHRC_NAME="bashrc_macos"
-elif [ "$OS" = "Linux" ]; then
-    BASHRC_NAME="bashrc_linux"
-fi
-
-if [ -n "$BASHRC_NAME" ]; then
-    if ! grep -qs "dotfiles/$BASHRC_NAME" ~/.bashrc; then
+ensure_local_rc_sources_dotfiles() {
+    local rc_file="$1"
+    local entry_name="$2"
+    if [ -L "$rc_file" ]; then
+        rm -f "$rc_file"
+    fi
+    if ! grep -qs "dotfiles/$entry_name" "$rc_file" 2>/dev/null; then
         {
             echo "# Shared dotfiles (machine-specific settings go below this line)"
-            echo "[ -f ~/dotfiles/$BASHRC_NAME ] && . ~/dotfiles/$BASHRC_NAME"
+            echo "[ -f ~/dotfiles/$entry_name ] && . ~/dotfiles/$entry_name"
             echo ""
-        } > ~/.bashrc.new
-        [ -f ~/.bashrc ] && cat ~/.bashrc >> ~/.bashrc.new
-        mv ~/.bashrc.new ~/.bashrc
+        } > "${rc_file}.new"
+        [ -f "$rc_file" ] && cat "$rc_file" >> "${rc_file}.new"
+        mv "${rc_file}.new" "$rc_file"
     fi
+}
+
+if [ "$OS" = "Darwin" ]; then
+    BASHRC_NAME="bashrc_macos"
+    ensure_local_rc_sources_dotfiles "$HOME/.bashrc" "$BASHRC_NAME"
+    ensure_local_rc_sources_dotfiles "$HOME/.zshrc" "$BASHRC_NAME"
+elif [ "$OS" = "Linux" ]; then
+    BASHRC_NAME="bashrc_linux"
+    ensure_local_rc_sources_dotfiles "$HOME/.bashrc" "$BASHRC_NAME"
 fi
 
 # --- Summary ---
 echo ""
 echo "==> Done: ~/.vimrc, ~/.bashrc, vim-sensible"
 if [ "$OS" = "Darwin" ]; then
-    echo "    Run: echo 'source ~/.bashrc' >> ~/.bash_profile && source ~/.bashrc"
+    echo "    Reload: source ~/.zshrc   (or: source ~/.bashrc)"
 else
     echo "    Reload: source ~/.bashrc"
 fi

@@ -1,11 +1,11 @@
 # ============================================================
-# bashrc_macos — macOS entry point
-# Source this from ~/.bashrc or ~/.bash_profile (do NOT symlink it).
+# bashrc_macos — macOS entry point (compatible with bash & zsh)
+# Source this from ~/.zshrc, ~/.bashrc, or ~/.bash_profile (do NOT symlink it).
 # Put machine-specific settings in the local file, after the source line.
 # ============================================================
 
-# Source system-wide bashrc
-if [ -f /etc/bashrc ]; then
+# Source system-wide bashrc when running under Bash
+if [ -n "$BASH_VERSION" ] && [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
@@ -14,15 +14,17 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
     if [ -f /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"      # Apple Silicon
     elif [ -f /usr/local/bin/brew ]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"          # Intel
+        eval "$(/opt/homebrew/bin/brew shellenv)"      # Intel
     fi
 fi
 
-# --- Bash Completion (Homebrew) ---
-if [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
-    . /opt/homebrew/etc/profile.d/bash_completion.sh
-elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
-    . /usr/local/etc/profile.d/bash_completion.sh
+# --- Bash Completion (Homebrew, Bash only) ---
+if [ -n "$BASH_VERSION" ]; then
+    if [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+        . /opt/homebrew/etc/profile.d/bash_completion.sh
+    elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
+        . /usr/local/etc/profile.d/bash_completion.sh
+    fi
 fi
 
 # --- macOS-specific PATH ---
