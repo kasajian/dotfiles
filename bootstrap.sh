@@ -39,13 +39,59 @@ if [ "$OS" = "Darwin" ]; then
     else
         echo "    Tip: run 'brew bundle' in $DOTFILES_DIR to install all dev tools"
     fi
-elif grep -qi microsoft /proc/version 2>/dev/null; then
-    check_optional wslview "sudo apt install wslu"
+elif [ "$OS" = "Linux" ] && [ -z "${TERMUX_VERSION:-}" ] && command -v apt-get >/dev/null 2>&1; then
+    APT_PKGS=(git curl wget vim jq ripgrep gh unzip bash-completion)
+    if grep -qi microsoft /proc/version 2>/dev/null; then
+        APT_PKGS+=(wslu)
+    fi
+    MISSING_APT=()
+    for pkg in "${APT_PKGS[@]}"; do
+        if ! dpkg -s "$pkg" >/dev/null 2>&1; then
+            MISSING_APT+=("$pkg")
+        fi
+    done
+    if [ "${#MISSING_APT[@]}" -gt 0 ]; then
+        echo "    Installing Linux base packages: ${MISSING_APT[*]}..."
+        sudo apt-get update -y
+        sudo apt-get install -y "${MISSING_APT[@]}"
+    fi
+    if ! locale -a 2>/dev/null | grep -qi '^en_US\.utf-\?8$' && command -v locale-gen >/dev/null 2>&1; then
+        echo "    Generating en_US.UTF-8 locale..."
+        sudo locale-gen en_US.UTF-8
+    fi
 fi
 
 if [ "${MISSING:-0}" = 1 ]; then
     echo "    Install missing packages above, then re-run: bash $DOTFILES_DIR/bootstrap.sh"
     exit 1
+fi
+
+# --- Node.js >= 24 via NVM (Linux / macOS when node >= 24 is not already present) ---
+if [ -z "${TERMUX_VERSION:-}" ] && { [ "$OS" = "Linux" ] || [ "$OS" = "Darwin" ]; }; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    NODE_MAJOR=0
+    if command -v node >/dev/null 2>&1; then
+        NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)"
+    fi
+    if [ "${NODE_MAJOR:-0}" -lt 24 ]; then
+        echo "    Installing NVM and Node.js 24..."
+        if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+            PROFILE=/dev/null bash -c 'curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
+        fi
+        \. "$NVM_DIR/nvm.sh"
+        nvm install 24
+        nvm alias default 24
+    fi
+    if command -v node >/dev/null 2>&1; then
+        NODE_BIN_DIR="$(dirname "$(command -v node)")"
+        mkdir -p "$HOME/.local/bin"
+        for bin_name in node npm npx corepack; do
+            if [ -x "$NODE_BIN_DIR/$bin_name" ]; then
+                ln -sf "$NODE_BIN_DIR/$bin_name" "$HOME/.local/bin/$bin_name"
+            fi
+        done
+    fi
 fi
 
 echo ""
@@ -94,16 +140,22 @@ elif [ "$OS" = "Linux" ]; then
     ensure_local_rc_sources_dotfiles "$HOME/.bashrc" "$BASHRC_NAME"
 fi
 
+# --- Git config ---
+if [ -f "$DOTFILES_DIR/git_config/core.sh" ]; then
+    echo "    Applying git_config/core.sh..."
+    bash "$DOTFILES_DIR/git_config/core.sh"
+fi
+if [ -f "$DOTFILES_DIR/git_config/username_git_config.sh" ] && [ -z "$(git config --global user.name 2>/dev/null || true)" ]; then
+    echo "    Applying git_config/username_git_config.sh..."
+    bash "$DOTFILES_DIR/git_config/username_git_config.sh"
+fi
+
 # --- Summary ---
 echo ""
-echo "==> Done: ~/.vimrc, ~/.bashrc, vim-sensible"
+echo "==> Done: ~/.vimrc, ~/.bashrc, vim-sensible, git config"
 if [ "$OS" = "Darwin" ]; then
     echo "    Reload: source ~/.zshrc   (or: source ~/.bashrc)"
 else
     echo "    Reload: source ~/.bashrc"
 fi
-echo ""
-echo "    Next steps:"
-echo "      git config:   bash $DOTFILES_DIR/git_config/core.sh"
-echo "      git config:   bash $DOTFILES_DIR/git_config/username_git_config.sh"
-[ "$OS" = "Darwin" ] && echo "      brew bundle:  (in $DOTFILES_DIR — installs all dev tools)"
+[ "$OS" = "Darwin" ] && echo "    Tip: run 'brew bundle' in $DOTFILES_DIR to install all dev tools" || true
