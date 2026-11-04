@@ -34,6 +34,13 @@ check_optional vim "sudo apt install vim   # or: brew install vim   or: pkg inst
 
 if [ "$OS" = "Darwin" ]; then
     if ! command -v brew >/dev/null 2>&1; then
+        if [ -x /opt/homebrew/bin/brew ]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        elif [ -x /usr/local/bin/brew ]; then
+            eval "$(/usr/local/bin/brew shellenv)"
+        fi
+    fi
+    if ! command -v brew >/dev/null 2>&1; then
         echo "    MISSING: Homebrew — install: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
         MISSING=1
     else
