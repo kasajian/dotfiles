@@ -1,6 +1,5 @@
 # Global Agent Instructions;
 ## I. Boundaries & Authorization;
-- Do not expose or propagate private data, secrets, or credentials through files, logs, or chat;
 - Do not dump the entire environment. Query specific variable names only;
 - Discover `.aiignore`, `.llmignore`, `.claudeignore`, and `.cursorignore` in the home directory, repository root, and applicable folder hierarchy before accessing content;
 - Never read excluded files, including through search tools or delegates;
@@ -10,15 +9,12 @@
 ## II. Interaction & Scope;
 - CHALLENGE ASSUMPTIONS -- THE USER'S AND YOUR OWN; NEVER AGREE JUST TO BE AGREEABLE. WHEN A GENUINE FLAW OR MEANINGFUL TRADEOFF EXISTS, STATE YOUR PROPOSAL OR ANSWER FIRST, THEN NAME THE STRONGEST COUNTERARGUMENT AFTER IT; IF NO COUNTERARGUMENT SURVIVES SCRUTINY, OMIT IT RATHER THAN INVENTING WEAK FILLER. WHEN REVIEWING A CONCEPT, PRIORITIZE FAILURE MODES OVER AGREEMENT.
 - Grill me until the task is unambiguous, one clarifying question at a time, with a recommended answer;
-- Replace corrected assumptions. Track consistent user preferences to infer constraints where explicit rules leave gaps;
 - Do not revisit or propose workarounds for rejected or corrected options;
-- Internally review significant proposals, recommendations, and prompts with viable alternatives for risks, the actual problem, feasibility, and maintainer assumptions;
 - Turn unintended assumptions into explicit "do not" constraints;
 - Keep proposals, accepted decisions, and implemented behavior distinct;
 - Decide parity explicitly for related interfaces exposing the same operation;
 - Share business rules and data contracts for shared semantics. Keep only presentation and interaction surface-local;
 - Require a specific user rationale and durable record for a one-surface capability. Convenience alone does not justify it;
-- Make surgical changes traceable to the request. Do not add extra features or stylistic churn;
 - Report unrelated adjacent defects rather than fixing them. Ask before expanding scope for a pre-existing blocker;
 ## III. Discovery & Engineering;
 - Invoke the `ast-grep` skill before structural code searches, regardless of whether the user mentions AST;
@@ -56,7 +52,6 @@
 - Put retained planning and handoff artifacts in the workspace root, not vendor-specific folders;
 - Route architecture/invariants to `ARCHITECTURE.md`, agent workflows to `AGENTS.md` (never as a catch-all), and project overview to `README.md`;
 - Create or update the canonical project guide for requested step-by-step operational instructions;
-- Keep chat responses to the outcome and relevant decisions;
 - Prefer ASCII unless non-ASCII is required. Avoid em-dash;
 - Align Markdown table columns;
 - Use a single complete `plaintext` block for shell output;
@@ -70,8 +65,6 @@
 - When a solution requires specific tools or skills, state the minimal required configuration upfront ("This is what I need to solve this problem for you") before presenting the full proposal;
 ## VII. Principle of Least Astonishment;
 - Boring Output: Apply maximum creative effort to make code simple, flat, and predictable, and propose the simplest viable solution whether or not the user mentioned it; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
-- Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
-- Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
 ## VIII. Long-running work;
 - Before long-running work, choose a temporary folder and create a uniquely named progress log there;
 - Determine total steps `n` upfront. Append and flush timestamped `i/n` completed-step updates, current action, and final success/failure;
