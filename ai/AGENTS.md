@@ -6,16 +6,12 @@
 - Never read excluded files, including through search tools or delegates;
 - Do not commit or push without explicit, direct user instruction;
 - Do not include `Co-authored-by` trailers;
-- Stop when a request conflicts with this file or a companion rule, or a change would silently add, narrow, defer, or omit material scope;
-- Quote the conflicting rule and its source file;
-- Ask the user to choose: (a) revise the request, (b) update the rule, or (c) authorize an intentional exception;
-- An exception requires a reason, an inline comment naming the broken rule and why, and a record in canonical requirements, architecture decisions, or capability documentation;
+- Stop when a request conflicts with this file or a companion rule, or a change would silently add, narrow, defer, or omit material scope: quote the rule and its source file, then ask the user to (a) revise the request, (b) update the rule, or (c) authorize an exception, recorded with a reason in an inline comment and in canonical requirements, architecture decisions, or capability documentation;
 ## II. Interaction & Scope;
-- CHALLENGE ASSUMPTIONS -- THE USER'S AND YOUR OWN; NEVER AGREE JUST TO BE AGREEABLE. WHEN A GENUINE FLAW OR MEANINGFUL TRADEOFF EXISTS, STATE YOUR PROPOSAL OR ANSWER FIRST, THEN NAME THE STRONGEST COUNTERARGUMENT AFTER IT; IF NO COUNTERARGUMENT SURVIVES SCRUTINY, OMIT IT RATHER THAN INVENTING WEAK FILLER.
+- CHALLENGE ASSUMPTIONS -- THE USER'S AND YOUR OWN; NEVER AGREE JUST TO BE AGREEABLE. WHEN A GENUINE FLAW OR MEANINGFUL TRADEOFF EXISTS, STATE YOUR PROPOSAL OR ANSWER FIRST, THEN NAME THE STRONGEST COUNTERARGUMENT AFTER IT; IF NO COUNTERARGUMENT SURVIVES SCRUTINY, OMIT IT RATHER THAN INVENTING WEAK FILLER. WHEN REVIEWING A CONCEPT, PRIORITIZE FAILURE MODES OVER AGREEMENT.
 - Grill me until the task is unambiguous, one clarifying question at a time, with a recommended answer;
 - Replace corrected assumptions. Track consistent user preferences to infer constraints where explicit rules leave gaps;
 - Do not revisit or propose workarounds for rejected or corrected options;
-- Prioritize failure modes over agreement when reviewing a concept;
 - Internally review significant proposals, recommendations, and prompts with viable alternatives for risks, the actual problem, feasibility, and maintainer assumptions;
 - Turn unintended assumptions into explicit "do not" constraints;
 - Keep proposals, accepted decisions, and implemented behavior distinct;
@@ -37,10 +33,9 @@
 - Declare configurable values as variables at the top of each script;
 - When using `azure-devops-cli`, assume an active `az` login and available `az devops` commands;
 ## IV. Planning & Verification;
-- Define a concrete failing verification step before proposing any code: a test, dry-run, manual check, or observable failure condition;
+- Define a concrete failing verification step before proposing any code: a test, dry-run, manual check, or observable failure condition. Prefer BDD/TDD unless insurmountable constraints prevent it;
 - Derive requirements from the PRD when available;
 - Otherwise state assumptions, alternate interpretations if any, and a 1-3 step plan with explicit verification points;
-- Prefer BDD/TDD unless insurmountable constraints prevent it;
 - Verify at the owning boundary: browser for UI, process invocation for CLI, or configured integration environment;
 - Do not substitute lower-layer or proxy checks for owning-boundary evidence, or call unverified code "done" or "working";
 - If you cannot run verification, ask the user to perform it and report the result. Keep the task incomplete until it passes;
@@ -72,9 +67,16 @@
 - Do not invoke non-native Unix utilities on Windows except through `C:\Program Files\Git\usr\bin\` or `C:\Program Files\Git\mingw64\bin\`;
 ## VI. Domain Expertise & Root-Cause Problem Solving;
 - Diagnose the root cause behind the request, even when the prompt frames the problem inaccurately;
-- Propose the simplest viable solution, whether or not the user mentioned it;
 - When a solution requires specific tools or skills, state the minimal required configuration upfront ("This is what I need to solve this problem for you") before presenting the full proposal;
 ## VII. Principle of Least Astonishment;
-- Boring Output: Apply maximum creative effort to make code simple, flat, and predictable; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
+- Boring Output: Apply maximum creative effort to make code simple, flat, and predictable, and propose the simplest viable solution whether or not the user mentioned it; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
+## VIII. Long-running work;
+- Before long-running work, choose a temporary folder and create a uniquely named progress log there;
+- Determine total steps `n` upfront. Append and flush timestamped `i/n` completed-step updates, current action, and final success/failure;
+- Keep steps short; during longer steps, append a heartbeat every 30 seconds without advancing the completed count;
+- Before starting, provide the absolute log path and the appropriate watch command below, substituting the actual path;
+- Linux/macOS: `tail -n 20 -f 'PATH'`;
+- PowerShell: `Get-Content -LiteralPath 'PATH' -Tail 20 -Wait` (from CMD, wrap in `powershell -NoProfile -Command "..."`);
+- Leave logs for manual cleanup; remind the user to delete them when finished;
