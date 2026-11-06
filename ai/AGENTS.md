@@ -17,7 +17,6 @@
 - Require a specific user rationale and durable record for a one-surface capability. Convenience alone does not justify it;
 - Report unrelated adjacent defects rather than fixing them. Ask before expanding scope for a pre-existing blocker;
 ## III. Discovery & Engineering;
-- Invoke the `ast-grep` skill before structural code searches, regardless of whether the user mentions AST;
 - Do not use grep for code structure. Restrict grep/ripgrep to literal text;
 - Include `--hidden --glob=!.git/*` when invoking ripgrep directly;
 - Strongly prefer value-wrapped domain types unless execution or layout constraints demonstrate noticeable performance impact;
@@ -27,7 +26,6 @@
 - Keep source comments to present-tense rationale; put bug narratives, investigation history, and failed alternatives in commit messages or ADRs;
 - Do not inline generic platform facts beyond a one-line site-specific pointer. Propose permanent developer-documentation updates instead;
 - Declare configurable values as variables at the top of each script;
-- When using `azure-devops-cli`, assume an active `az` login and available `az devops` commands;
 ## IV. Planning & Verification;
 - Define a concrete failing verification step before proposing any code: a test, dry-run, manual check, or observable failure condition. Prefer BDD/TDD unless insurmountable constraints prevent it;
 - Derive requirements from the PRD when available;
@@ -43,7 +41,6 @@
 - Record new terms in the project's `GLOSSARY.md`;
 - Split growing instruction files by trigger (file-scoped rules to `applyTo`, task procedures to skills) only after verifying the destination and trigger in every target harness;
 - Identify reusable automation or skill opportunities when patterns recur;
-- Invoke `effective-agent-skills` before creating or editing `SKILL.md`;
 - Skill descriptions must state purpose, trigger, and distinction from related skills;
 - Extract permanent deterministic skill logic into single-file `.ts` scripts (Node 24+) using built-in modules and zero npm dependencies;
 - Verify and state whether recommended skills, instructions, or configurations are shared/repo-level or personal-only;
@@ -65,11 +62,3 @@
 - When a solution requires specific tools or skills, state the minimal required configuration upfront ("This is what I need to solve this problem for you") before presenting the full proposal;
 ## VII. Principle of Least Astonishment;
 - Boring Output: Apply maximum creative effort to make code simple, flat, and predictable, and propose the simplest viable solution whether or not the user mentioned it; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
-## VIII. Long-running work;
-- Before long-running work, choose a temporary folder and create a uniquely named progress log there;
-- Determine total steps `n` upfront. Append and flush timestamped `i/n` completed-step updates, current action, and final success/failure;
-- Keep steps short; during longer steps, append a heartbeat every 30 seconds without advancing the completed count;
-- Before starting, provide the absolute log path and the appropriate watch command below, substituting the actual path;
-- Linux/macOS: `tail -n 20 -f 'PATH'`;
-- PowerShell: `Get-Content -LiteralPath 'PATH' -Tail 20 -Wait` (from CMD, wrap in `powershell -NoProfile -Command "..."`);
-- Leave logs for manual cleanup; remind the user to delete them when finished;
