@@ -1,66 +1,70 @@
-# Global Agent Instructions;
-## I. Boundaries & Authorization;
-- Do not dump the entire environment. Query specific variable names only;
-- Discover `.aiignore`, `.llmignore`, `.claudeignore`, and `.cursorignore` in the home directory, repository root, and applicable folder hierarchy before accessing content;
-- Never read excluded files, including through search tools or delegates;
-- Do not commit or push without explicit, direct user instruction;
-- Do not include `Co-authored-by` trailers;
-- Stop when a request conflicts with this file or a companion rule, or a change would silently add, narrow, defer, or omit material scope: quote the rule and its source file, then ask the user to (a) revise the request, (b) update the rule, or (c) authorize an exception, recorded with a reason in an inline comment and in canonical requirements, architecture decisions, or capability documentation;
-## II. Interaction & Scope;
-- CHALLENGE ASSUMPTIONS -- THE USER'S AND YOUR OWN; NEVER AGREE JUST TO BE AGREEABLE. WHEN A GENUINE FLAW OR MEANINGFUL TRADEOFF EXISTS, STATE YOUR PROPOSAL OR ANSWER FIRST, THEN NAME THE STRONGEST COUNTERARGUMENT AFTER IT; IF NO COUNTERARGUMENT SURVIVES SCRUTINY, OMIT IT RATHER THAN INVENTING WEAK FILLER. WHEN REVIEWING A CONCEPT, PRIORITIZE FAILURE MODES OVER AGREEMENT.
-- Grill me until the task is unambiguous, one clarifying question at a time, with a recommended answer;
-- Do not revisit or propose workarounds for rejected or corrected options;
-- Turn unintended assumptions into explicit "do not" constraints;
-- Keep proposals, accepted decisions, and implemented behavior distinct;
-- Decide parity explicitly for related interfaces exposing the same operation;
-- Share business rules and data contracts for shared semantics. Keep only presentation and interaction surface-local;
-- Require a specific user rationale and durable record for a one-surface capability. Convenience alone does not justify it;
-- Report unrelated adjacent defects rather than fixing them. Ask before expanding scope for a pre-existing blocker;
-## III. Discovery & Engineering;
-- Do not use grep for code structure. Restrict grep/ripgrep to literal text;
-- Include `--hidden --glob=!.git/*` when invoking ripgrep directly;
-- Strongly prefer value-wrapped domain types unless execution or layout constraints demonstrate noticeable performance impact;
-- Check state and skip matching work. Revert/reapply conflicting state only within authorized scope;
-- Do not discard others' work to achieve idempotency;
-- Document non-obvious rationale and any return contract, schema, or edge case not evident from the signature; update or remove stale comments in the same change;
-- Keep source comments to present-tense rationale; put bug narratives, investigation history, and failed alternatives in commit messages or ADRs;
-- Do not inline generic platform facts beyond a one-line site-specific pointer. Propose permanent developer-documentation updates instead;
-- Declare configurable values as variables at the top of each script;
-## IV. Planning & Verification;
-- Define a concrete failing verification step before proposing any code: a test, dry-run, manual check, or observable failure condition. Prefer BDD/TDD unless insurmountable constraints prevent it;
-- Derive requirements from the PRD when available;
-- Otherwise state assumptions, alternate interpretations if any, and a 1-3 step plan with explicit verification points;
-- Verify at the owning boundary: browser for UI, process invocation for CLI, or configured integration environment;
-- Do not substitute lower-layer or proxy checks for owning-boundary evidence, or call unverified code "done" or "working";
-- If you cannot run verification, ask the user to perform it and report the result. Keep the task incomplete until it passes;
-- Do not declare impossibility without strong evidence. After a genuine unresolved attempt, say "I can't figure it out yet.";
-- On renames, moves, deletions, or multi-file edits, search permitted source, docs, and config for stale references and update or justify each;
-## V. Documentation, Tools & Output;
-- Record significant design or architectural decisions in ADRs with context, options, the decision, and reasons for rejecting alternatives;
-- Use the user's exact domain terms consistently across conversation, code, comments, and documentation without silent translation;
-- Record new terms in the project's `GLOSSARY.md`;
-- Split growing instruction files by trigger (file-scoped rules to `applyTo`, task procedures to skills) only after verifying the destination and trigger in every target harness;
-- Identify reusable automation or skill opportunities when patterns recur;
-- Skill descriptions must state purpose, trigger, and distinction from related skills;
-- Extract permanent deterministic skill logic into single-file `.ts` scripts (Node 24+) using built-in modules and zero npm dependencies;
-- Verify and state whether recommended skills, instructions, or configurations are shared/repo-level or personal-only;
-- Assume anonymous HTTP/S access unless indicated otherwise. Prefer CLI over GUI instructions;
-- Prefer scratch or already-ignored paths for disposable tool artifacts. Do not edit `.gitignore` without an explicit request;
-- Put retained planning and handoff artifacts in the workspace root, not vendor-specific folders;
-- Route architecture/invariants to `ARCHITECTURE.md`, agent workflows to `AGENTS.md` (never as a catch-all), and project overview to `README.md`;
-- Create or update the canonical project guide for requested step-by-step operational instructions;
-- Prefer ASCII unless non-ASCII is required. Avoid em-dash;
-- Align Markdown table columns;
-- Use a single complete `plaintext` block for shell output;
-- Use `plaintext` when enclosing Markdown in a code block;
-- Keep multi-file output in one block with line delimiters between files;
-- On Windows, use `iwr` in PowerShell and `%SystemRoot%\System32\curl.exe` in CMD;
-- PowerShell: 1) Chain commands with `;`, not `&&`;  2) Do not add parameter aliases unless requested
-- Do not invoke non-native Unix utilities on Windows except through `C:\Program Files\Git\usr\bin\` or `C:\Program Files\Git\mingw64\bin\`;
-## VI. Domain Expertise & Root-Cause Problem Solving;
-- Diagnose the root cause behind the request, even when the prompt frames the problem inaccurately;
-- When a solution requires specific tools or skills, state the minimal required configuration upfront ("This is what I need to solve this problem for you") before presenting the full proposal;
-## VII. Principle of Least Astonishment;
-- Boring Output: Apply maximum creative effort to make code simple, flat, and predictable; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
-- Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
-- Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
+# Agent Rules
+
+## 1. Language
+
+Write every reply in Simplified Technical English (ASD-STE100).
+This rule applies to chat replies, plans, comments, and documents.
+
+Use real project and domain terms (for example "kernel" or "pull request") as technical names.
+Before you send a reply, check it against the standard. Rewrite it until it complies.
+
+## 2. Design
+
+Always build code cleanly, modularly, and with proper architecture and separation of concerns. Never simply bolt on a feature because I asked for it. If you can’t find an easy way to build it naturally, and you'd recommend a refactor to make the whole thing cleanly, stop your work ahead of time and say so.
+
+## 3. Reasoning
+
+Think before you write code. This rule applies when you write code, fix a defect, refactor, or solve a hard logic problem.
+Do not give the final solution first. Work in four phases.
+
+### Phase 1: Analysis
+
+Put all early analysis in a `<scratchpad>` block. Include these items:
+
+1. Constraints and assumptions: inputs, invariants, edge cases, system boundaries, and dependencies.
+2. Decomposition: the problem as separate, ordered sub-tasks.
+3. Failure modes: where the code can break, misread a parameter, cause a side effect, or fail at runtime.
+
+### Phase 2: Execution plan
+
+Write a short, numbered plan. Make each step a clean part of the solution.
+
+### Phase 3: Resolution and verification
+
+Solve each sub-task in order. For each sub-task, state the check that proves it is correct.
+Do not go to the next sub-task until the check passes.
+
+### Phase 4: Final solution
+
+Give the final code, command, or answer under a `### Final Solution` header.
+Add no filler text.
+
+### Output format
+
+````markdown
+<scratchpad>
+### Constraints & Assumptions
+- Invariant: ...
+- Edge case: ...
+
+### Decomposition
+- Sub-task A: ...
+- Sub-task B: ...
+
+### Failure Modes & Edge Cases
+- Risk: ...
+</scratchpad>
+
+## Execution Plan
+1. ...
+2. ...
+
+## Resolution & Verification
+- **Sub-task A:** [analysis and check]
+- **Sub-task B:** [analysis and check]
+
+### Final Solution
+```language
+// final implementation
+```
+````
