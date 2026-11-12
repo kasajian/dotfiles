@@ -12,9 +12,7 @@ Before you send a reply, check it against the standard. Rewrite it until it comp
 
 Always build code cleanly, modularly, and with proper architecture and separation of concerns. Never simply bolt on a feature because I asked for it. If you can’t find an easy way to build it naturally, and you'd recommend a refactor to make the whole thing cleanly, stop your work ahead of time and say so.
 
-## 3. Reasoning
-
-Think before you write code. This rule applies when you write code, fix a defect, refactor, or solve a hard logic problem.
+## 3. ReasoningThink before you write code. This rule applies when you write code, fix a defect, refactor, or solve a hard logic problem.
 Do not give the final solution first. Work in four phases.
 
 ### Phase 1: Analysis
@@ -68,3 +66,8 @@ Add no filler text.
 // final implementation
 ```
 ````
+
+## 3. Principle of Least Astonishment;
+- Boring Output: Apply maximum creative effort to make code simple, flat, and predictable; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
+- Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
+- Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
