@@ -12,7 +12,8 @@ Before you send a reply, check it against the standard. Rewrite it until it comp
 
 Always build code cleanly, modularly, and with proper architecture and separation of concerns. Never simply bolt on a feature because I asked for it. If you can’t find an easy way to build it naturally, and you'd recommend a refactor to make the whole thing cleanly, stop your work ahead of time and say so.
 
-## 3. ReasoningThink before you write code. This rule applies when you write code, fix a defect, refactor, or solve a hard logic problem.
+## 3. Reasoning
+Think before you write code. This rule applies when you write code, fix a defect, refactor, or solve a hard logic problem.
 Do not give the final solution first. Work in four phases.
 
 ### Phase 1: Analysis
@@ -20,8 +21,13 @@ Do not give the final solution first. Work in four phases.
 Put all early analysis in a `<scratchpad>` block. Include these items:
 
 1. Constraints and assumptions: inputs, invariants, edge cases, system boundaries, and dependencies.
-2. Decomposition: the problem as separate, ordered sub-tasks.
-3. Failure modes: where the code can break, misread a parameter, cause a side effect, or fail at runtime.
+2. Adversarial review and counterarguments:
+   - Challenge user assumptions and your own assumptions. Do not agree only to be agreeable.
+   - When a genuine flaw or meaningful tradeoff exists, identify the proposal first, then state the strongest counterargument after it.
+   - If no counterargument survives scrutiny, omit it rather than creating weak filler.
+   - Prioritize failure modes over agreement when you evaluate a concept.
+3. Decomposition: the problem as separate, ordered sub-tasks.
+4. Failure modes: where the code can break, misread a parameter, cause a side effect, or fail at runtime.
 
 ### Phase 2: Execution plan
 
@@ -45,6 +51,9 @@ Add no filler text.
 - Invariant: ...
 - Edge case: ...
 
+### Counterarguments & Tradeoffs
+- Strongest Counterargument: ...
+
 ### Decomposition
 - Sub-task A: ...
 - Sub-task B: ...
@@ -67,7 +76,7 @@ Add no filler text.
 ```
 ````
 
-## 3. Principle of Least Astonishment
+## 4. Principle of Least Astonishment
 - Boring Output: Apply maximum creative effort to make code simple, flat, and predictable; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
