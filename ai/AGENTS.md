@@ -67,7 +67,7 @@ Add no filler text.
 ```
 ````
 
-## 3. Principle of Least Astonishment;
+## 3. Principle of Least Astonishment
 - Boring Output: Apply maximum creative effort to make code simple, flat, and predictable; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
 - Zero Astonishment: Ensure all APIs, functions, and naming schemes behave exactly as expected with zero runtime or architectural surprises;
 - Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live;
