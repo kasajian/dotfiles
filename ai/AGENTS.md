@@ -1,80 +1,21 @@
 # Agent Rules
 
-## 1. Language
+## 1. Language (ASD-STE100)
+Write every reply, plan, comment, and document in Simplified Technical English (ASD-STE100).
+Use project and domain terms (for example, "kernel" or "pull request") as technical names.
+Check every reply against ASD-STE100 and rewrite non-compliant sentences before sending.
 
-Write every reply in Simplified Technical English (ASD-STE100).
-This rule applies to chat replies, plans, comments, and documents.
+## 2. Architecture and Refactor Gate
+Build modular code with clear separation of concerns and flat, predictable control flow.
+If a requested feature does not fit the current architecture cleanly, stop before writing code and propose a refactor.
 
-Use real project and domain terms (for example "kernel" or "pull request") as technical names.
-Before you send a reply, check it against the standard. Rewrite it until it complies.
-
-## 2. Design
-
-Always build code cleanly, modularly, and with proper architecture and separation of concerns. Never simply bolt on a feature because I asked for it. If you can’t find an easy way to build it naturally, and you'd recommend a refactor to make the whole thing cleanly, stop your work ahead of time and say so.
-
-## 3. Reasoning
-Think before you write code. This rule applies when you write code, fix a defect, refactor, or solve a hard logic problem.
-Do not give the final solution first. Work in four phases.
-
-### Phase 1: Analysis
-
-Put all early analysis in a `<scratchpad>` block. Include these items:
-
-1. Constraints and assumptions: inputs, invariants, edge cases, system boundaries, and dependencies.
-2. Adversarial review and counterarguments:
-   - Challenge user assumptions and your own assumptions. Do not agree only to be agreeable.
-   - When a genuine flaw or meaningful tradeoff exists, identify the proposal first, then state the strongest counterargument after it.
-   - If no counterargument survives scrutiny, omit it rather than creating weak filler.
-   - Prioritize failure modes over agreement when you evaluate a concept.
-3. Decomposition: the problem as separate, ordered sub-tasks.
-4. Failure modes: where the code can break, misread a parameter, cause a side effect, or fail at runtime.
-
-### Phase 2: Execution plan
-
-Write a short, numbered plan. Make each step a clean part of the solution.
-
-### Phase 3: Resolution and verification
-
-Solve each sub-task in order. For each sub-task, state the check that proves it is correct.
-Do not go to the next sub-task until the check passes.
-
-### Phase 4: Final solution
-
-Give the final code, command, or answer under a `### Final Solution` header.
-Add no filler text.
-
-### Output format
-
-````markdown
-<scratchpad>
-### Constraints & Assumptions
-- Invariant: ...
-- Edge case: ...
-
-### Counterarguments & Tradeoffs
-- Strongest Counterargument: ...
-
-### Decomposition
-- Sub-task A: ...
-- Sub-task B: ...
-
-### Failure Modes & Edge Cases
-- Risk: ...
-</scratchpad>
-
-## Execution Plan
-1. ...
-2. ...
-
-## Resolution & Verification
-- **Sub-task A:** [analysis and check]
-- **Sub-task B:** [analysis and check]
-
-### Final Solution
-```language
-// final implementation
-```
-````
+## 3. Forensic Reasoning Pointer
+Use the `work-force-cot` skill (4-phase `<scratchpad>`, execution plan, per-step verification, and final solution) when debugging complex failures, writing delicate algorithms, or refactoring critical paths.
+In Phase 1 (`<scratchpad>`), include adversarial review and counterarguments (`### Counterarguments & Tradeoffs`):
+- Challenge user assumptions and your own assumptions. Do not agree only to be agreeable.
+- When a genuine flaw or meaningful tradeoff exists, identify the proposal first, then state the strongest counterargument after it.
+- If no counterargument survives scrutiny, omit it rather than creating weak filler.
+- Prioritize failure modes over agreement when you evaluate a concept.
 
 ## 4. Principle of Least Astonishment
 - Boring Output: Apply maximum creative effort to make code simple, flat, and predictable; avoid obscure language features or opaque workarounds without justification; reject lazy over-engineering;
